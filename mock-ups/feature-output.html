@@ -1,57 +1,77 @@
 <!DOCTYPE html> 
 <html lang="en"> 
-	<head> 
-		<meta charset="utf-8"> 
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head> 
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Mock Feature Output</title> 
+        <title>Mock Feature Output</title> 
 
-		<link href="bootstrap.min.css" rel="stylesheet"> 
-	</head> 
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous">
+    </head> 
 
-	<body> 
-		<div class="container-fluid"> 
-			<div class="row"> 
-				<div class="col-sm-8"> 
-					<p class="text-center"> 
-					Ham.
-					O, I die, Horatio;
-					The potent poison quite o'er-crows my spirit:
-					I cannot live to hear the news from England;
-					But I do prophesy the election lights
-					On Fortinbras: he has my dying voice;
-					So tell him, with the occurrents, more and less,
-					Which have solicited.--the rest is silence.
+    <body> 
+        <br> 
+        <div class="container"> 
+            <div class="panel panel-default"> 	
+                <div class="panel-heading"> 
+                    <h3 class="panel-title">Your Submission</h3> 
+                </div> 
+                <div class="panel-body"> 
+                    Ham.
+                    O, I die, Horatio;
+                    The potent poison quite o'er-crows my spirit:
+                    I cannot live to hear the news from England;
+                    But I do prophesy the election lights
+                    On Fortinbras: he has my dying voice;
+                    So tell him, with the occurrents, more and less,
+                    Which have solicited.--the rest is silence.
 
-					[Dies.]
+                    [Dies.]
 
-					Hor.
-					Now cracks a noble heart.--Good night, sweet prince,
-					And flights of angels sing thee to thy rest!
-					Why does the drum come hither?
+                    Hor.
+                    Now cracks a noble heart.--Good night, sweet prince,
+                    And flights of angels sing thee to thy rest!
+                    Why does the drum come hither?
 
-					[March within.]
-					</p> 
-				</div> 
-
-				<div class="col-sm-4"> 
-					<div class="row"> 
-						<div class="col-sm-6"> 
-							<ul class="list-group"> 
-								<li class="list-group-item list-group-item-primary">Insights</li> 
-								<li class="list-group-item list-group-item-secondary">Negative</li> 
-							</ul> 
-						</div> 
-						<div class="col-sm-6"> 
-							<ul class="list-group"> 
-								<li class="list-group-item list-group-item-primary">Probability</li> 
-								<li class="list-group-item">0.86</li> 
-							</ul>
-						</div> 
-					</div> 
-				</div> 
-			</div> 
-		</div> 
-	</body> 
+                    [March within.]
+                </div> 
+                <table class="table"> 
+                    <thead> 
+                        <tr> 
+                            <th>Insights</th> 
+                            <th>Probability</th> 
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        <tr> 
+                            <td>Negative</td> 
+                            <td>0.69</td> 
+                        </tr> 
+                        <tr> 
+                            <td>Shakespeare</td> 
+                            <td>0.92</td> 
+                        </tr> 
+                        <tr> 
+                            <td>Death</td> 
+                            <td>0.99</td> 
+                        </tr> 
+                        <tr> 
+                            <td>Politics</td> 
+                            <td>0.84</td> 
+                        </tr> 
+                        <tr>
+                            <td>Music</td> 
+                            <td>0.51</td> 
+                        </tr> 
+                    </tbody>  
+                </table> 
+            </div> 
+            <button type="submit" class="btn btn-primary">New Submission</button> 
+            <button type="submit" class="btn">Edit Submission</button> 
+        </div> 
+    </body> 
 </html> 
