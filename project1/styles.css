@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+.mainContent {
+  margin-top: 40px;
+}
+
 .siteTitle {
   margin-bottom: 20px;
 }
@@ -32,4 +36,22 @@ body {
   background-color: #eee;
   margin-bottom: 20px;
   padding: 15px;
+}
+
+.genPage {
+  display: flex;
+}
+
+.genPage .insightCard {
+  display: inline-block;
+  max-width: 50%;
+}
+
+.block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block > * {
+  flex: 1 25%;
 }
