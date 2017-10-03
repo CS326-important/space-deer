@@ -1,77 +1,88 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-    <head> 
-        <meta charset="utf-8"> 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mock Feature Output</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-        <title>Mock Feature Output</title> 
+    </head>
 
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-    </head> 
+    <body>
+        <!-- nav bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Textifai</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> 
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <div class="navbar-nav">
+                    <a href="#" class="nav-link nav-item">Test</a>
+                    <a href="#" class="nav-link nav-item">Test</a>
+                    <a href="#" class="nav-link nav-item">Test</a>
+                    <a href="#" class="nav-link nav-item">Test</a>
+                    <a href="#" class="nav-link nav-item">Test</a>
+                </div>
+                <a href="#" class="nav-link">Login / Sign-up</a>
+            </div>
+        </nav>
 
-    <body> 
-        <br> 
-        <div class="container"> 
-            <div class="panel panel-default"> 	
-                <div class="panel-heading"> 
-                    <h3 class="panel-title">Your Submission</h3> 
-                </div> 
-                <div class="panel-body"> 
-                    Ham.
-                    O, I die, Horatio;
-                    The potent poison quite o'er-crows my spirit:
-                    I cannot live to hear the news from England;
-                    But I do prophesy the election lights
-                    On Fortinbras: he has my dying voice;
-                    So tell him, with the occurrents, more and less,
-                    Which have solicited.--the rest is silence.
-
-                    [Dies.]
-
-                    Hor.
-                    Now cracks a noble heart.--Good night, sweet prince,
-                    And flights of angels sing thee to thy rest!
-                    Why does the drum come hither?
-
-                    [March within.]
-                </div> 
-                <table class="table"> 
-                    <thead> 
-                        <tr> 
-                            <th>Insights</th> 
-                            <th>Probability</th> 
-                        </tr> 
-                    </thead> 
-                    <tbody> 
-                        <tr> 
-                            <td>Negative</td> 
-                            <td>0.69</td> 
-                        </tr> 
-                        <tr> 
-                            <td>Shakespeare</td> 
-                            <td>0.92</td> 
-                        </tr> 
-                        <tr> 
-                            <td>Death</td> 
-                            <td>0.99</td> 
-                        </tr> 
-                        <tr> 
-                            <td>Politics</td> 
-                            <td>0.84</td> 
-                        </tr> 
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-10 siteTitle">
+                    <h3 class="card-title">Your Submission</h3> 
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">Ham. O, I die, Horatio; The potent poison quite o&apos;er-crows my spirit:
+                    I cannot live to hear the news from England; But I do prophesy the election
+                    lights On Fortinbras: he has my dying voice; So tell him, with the occurrents,
+                    more and less, Which have solicited.--the rest is silence. [Dies.] Hor.
+                    Now cracks a noble heart.--Good night, sweet prince, And flights of angels
+                    sing thee to thy rest! Why does the drum come hither? [March within.]</div>
+                <table
+                     class="table">
+                    <thead>
                         <tr>
-                            <td>Music</td> 
-                            <td>0.51</td> 
-                        </tr> 
-                    </tbody>  
-                </table> 
-            </div> 
-            <button type="submit" class="btn btn-primary">New Submission</button> 
-            <button type="submit" class="btn">Edit Submission</button> 
-        </div> 
-    </body> 
-</html> 
+                            <th>Insights</th>
+                            <th>Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Negative</td>
+                            <td>0.69</td>
+                        </tr>
+                        <tr>
+                            <td>Shakespeare</td>
+                            <td>0.92</td>
+                        </tr>
+                        <tr>
+                            <td>Death</td>
+                            <td>0.99</td>
+                        </tr>
+                        <tr>
+                            <td>Politics</td>
+                            <td>0.84</td>
+                        </tr>
+                        <tr>
+                            <td>Music</td>
+                            <td>0.51</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-primary">New Submission</button>
+            <button type="submit" class="btn">Edit Submission</button>
+        </div>
+        <!-- Boostrap -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    </body>
+
+</html>
