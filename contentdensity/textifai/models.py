@@ -51,7 +51,7 @@ class Insight(models.Model):
 
 class Comment(models.Model):
     """
-    Model representing a model associated with text and a user.
+    Model representing a comment associated with text and a user.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular comment.")
     content = models.CharField(max_length=500)
