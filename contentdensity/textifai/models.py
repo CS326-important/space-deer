@@ -4,15 +4,15 @@ import uuid
 
 # Create your models here.
 
+
 class Text(models.Model):
     """
     Model representing text from user input.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
     content = models.CharField(max_length=1000)
-    #userid
-    #timestamp
-    #comments
+    time = models.DateTimeField(auto_now_add=True)
+    #todo: userid, not required yet.
 
     def get_absolute_url(self):
         """
@@ -47,3 +47,27 @@ class Insight(models.Model):
         String for representing the Insight object.
         """
         return self.tone
+
+
+class Comment(models.Model):
+    """
+    Model representing a model associated with text and a user.
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular comment.")
+    content = models.CharField(max_length=500)
+    text = models.ForeignKey(Text)
+    time = models.DateTimeField(auto_now_add=True)
+    #todo: userid, not required yet.
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular Comment instance.
+        """
+        return reverse('comment-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """
+        String for representing the Comment object.
+        """
+        return self.content
+
