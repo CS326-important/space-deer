@@ -1,8 +1,9 @@
 from django.conf.urls import url 
 from . import views 
 
-urlpatterns = [ 
-
+urlpatterns = [
+    url(r'^textinput', views.textinput, name='textinput'),
+    url(r'^featureoutput', views.featureoutput, name='featureoutput'),
 ]
 
 
