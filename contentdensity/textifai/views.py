@@ -31,8 +31,6 @@ def featureoutput(request):
         context={'mock_text': mock_text.content, 'mock_insights': mock_insights},
     )
 
-from .models import User
-
 def account(request):
     """
     View function for user accounts.
@@ -42,4 +40,14 @@ def account(request):
         request,
         "account.html",
         context={'username':username}
+    )
+
+def general_insights(request):
+    """
+    View function for the general insights page of the site.
+    """
+    return render(
+        request,
+        'general-insights.html',
+        context={},
     )
