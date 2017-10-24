@@ -21,3 +21,4 @@ def featureoutput(request):
         'featureoutput.html',
         context={},
     )
+
