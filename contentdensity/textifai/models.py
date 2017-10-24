@@ -5,6 +5,39 @@ import uuid
 # Create your models here.
 
 
+class User(models.Model):
+    """
+    Model representing a user account.
+    """
+    userid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
+    email = models.CharField(max_length=40)
+    username = models.CharField(max_length=20)
+
+    """
+    User settings.
+    """
+    LIGHT = 'LI'
+    DARK = 'DA'
+    THEMES = (
+        (LIGHT, 'Light'),
+        (DARK, 'Dark'),
+    )
+    theme = models.CharField(max_length=2, choices=THEMES, default=LIGHT)
+    mature_content = models.BooleanField()
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular User instance.
+        """
+        return reverse('user-detail', args=[str(self.userid)])
+
+    def __str__(self):
+        """
+        String for representing the User object.
+        """
+        return self.username
+
+
 class Text(models.Model):
     """
     Model representing text from user input.
@@ -12,7 +45,7 @@ class Text(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
     content = models.CharField(max_length=1000)
     time = models.DateTimeField(auto_now_add=True)
-    #todo: userid, not required yet.
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         """
@@ -35,6 +68,7 @@ class Insight(models.Model):
     tone = models.CharField(max_length=100)
     probability = models.FloatField()
     text = models.ForeignKey(Text)
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         """
@@ -57,7 +91,7 @@ class Comment(models.Model):
     content = models.CharField(max_length=500)
     text = models.ForeignKey(Text)
     time = models.DateTimeField(auto_now_add=True)
-    #todo: userid, not required yet.
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         """
@@ -71,36 +105,4 @@ class Comment(models.Model):
         """
         return self.content
 
-        
-class User(models.Model):
-    """
-    Model representing a user account.
-    """
-    userid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
-    email = models.CharField(max_length=40)
-    username = models.CharField(max_length=20)
-    
-    """
-    User settings.
-    """
-    LIGHT = 'LI'
-    DARK = 'DA'
-    THEMES = (
-        (LIGHT, 'Light'),
-        (DARK, 'Dark'),
-    )
-    theme = models.CharField(max_length=2, choices=THEMES, default=LIGHT)
-    mature_content = models.BooleanField()
-
-    def get_absolute_url(self):
-        """
-        Returns the url to access a particular Text instance.
-        """
-        return reverse('text-detail', args=[str(self.id)])
-
-    def __str__(self):
-        """
-        String for representing the Text object.
-        """
-        return self.username
 
