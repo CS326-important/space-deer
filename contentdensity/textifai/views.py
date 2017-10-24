@@ -2,6 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 
+def index(request):
+    """
+    View function for the homepage of the site
+    """
+    return render(request, 'index.html', context={})
+
 def textinput(request):
     """
     View function for the text input page of the site.
