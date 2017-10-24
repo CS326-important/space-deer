@@ -71,3 +71,36 @@ class Comment(models.Model):
         """
         return self.content
 
+        
+class User(models.Model):
+    """
+    Model representing a user account.
+    """
+    userid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
+    email = models.CharField(max_length=40)
+    username = models.CharField(max_length=20)
+    
+    """
+    User settings.
+    """
+    LIGHT = 'LI'
+    DARK = 'DA'
+    THEMES = (
+        (LIGHT, 'Light'),
+        (DARK, 'Dark'),
+    )
+    theme = models.CharField(max_length=2, choices=THEMES, default=LIGHT)
+    mature_content = models.BooleanField()
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular Text instance.
+        """
+        return reverse('text-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """
+        String for representing the Text object.
+        """
+        return self.username
+
