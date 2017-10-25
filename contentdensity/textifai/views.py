@@ -22,3 +22,15 @@ def featureoutput(request):
         context={},
     )
 
+from .models import User
+
+def account(request):
+    """
+    View function for user accounts.
+    """
+    username = User._meta.get_field('username')
+    return render(
+        request,
+        "account.html",
+        context={'username':username}
+    )
