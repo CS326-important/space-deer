@@ -22,10 +22,7 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <div class="navbar-nav">
                     <a href="#" class="nav-link nav-item">General</a>
-                    <a href="#" class="nav-link nav-item">Add</a>
-                    <a href="#" class="nav-link nav-item">Test</a>
-                    <a href="#" class="nav-link nav-item">Test</a>
-                    <a href="#" class="nav-link nav-item">Test</a>
+                    <a href="{% 'textinput' %}" class="nav-link nav-item">Add</a>
                 </div>
                 <a href="#" class="nav-link">Login / Sign-up</a>
             </div>
@@ -41,7 +38,7 @@
                 </div>
             </div>
 
-						{% block content_abstract %}{% endblock %}
+			{% block content_abstract %}{% endblock %}
         </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
