@@ -7,5 +7,3 @@ urlpatterns = [
     url(r'^featureoutput', views.featureoutput, name='featureoutput'),
     url(r'^account', views.account, name='account'),
 ]
-
-
