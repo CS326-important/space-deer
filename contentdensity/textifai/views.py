@@ -16,6 +16,7 @@ def featureoutput(request):
     """
     View function for the feature output page of the site.
     """
+
     return render(
         request,
         'featureoutput.html',
