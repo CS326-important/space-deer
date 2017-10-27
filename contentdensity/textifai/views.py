@@ -23,13 +23,12 @@ def featureoutput(request):
     """
     View function for the feature output page of the site.
     """
-    mock_text = Text.objects.all().first().content
-    mock_insights = Insight.objects.all()
-    print(mock_text)
+    mock_text = Text.objects.first()
+    mock_insights = Insight.objects.filter(user=mock_text.user)
     return render(
         request,
         'featureoutput.html',
-        context={'mock_text': mock_text, 'mock_insights': mock_insights},
+        context={'mock_text': mock_text.content, 'mock_insights': mock_insights},
     )
 
 from .models import User
