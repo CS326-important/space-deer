@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import User, Text, Insight, Comment
 
 # Create your views here.
 
@@ -22,11 +23,13 @@ def featureoutput(request):
     """
     View function for the feature output page of the site.
     """
-
+    mock_text = Text.objects.all().first().content
+    mock_insights = Insight.objects.all()
+    print(mock_text)
     return render(
         request,
         'featureoutput.html',
-        context={},
+        context={'mock_text': mock_text, 'mock_insights': mock_insights},
     )
 
 from .models import User
