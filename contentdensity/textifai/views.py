@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from .models import User, Text, Insight, Comment
 
 # Create your views here.
@@ -46,8 +47,13 @@ def general_insights(request):
     """
     View function for the general insights page of the site.
     """
+    insights = Insight.objects.filter(user__isnull=True, text__isnull=True)
+    # TODO: personal contributions to the general insights
+    personal_insights = Insight.objects.filter(user=None, text__isnull=False)
+    username=None
     return render(
         request,
         'general-insights.html',
-        context={},
+        context={'insights':insights, 'personal_insights':personal_insights, 'username':username},
     )
+
