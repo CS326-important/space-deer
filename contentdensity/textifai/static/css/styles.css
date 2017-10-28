@@ -47,11 +47,3 @@ body {
   max-width: 50%;
 }
 
-.block {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.block > * {
-  flex: 1 25%;
-}
