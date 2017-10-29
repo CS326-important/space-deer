@@ -66,7 +66,7 @@ class Insight(models.Model):
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
     tone = models.CharField(max_length=100)
-    probability = models.FloatField()
+    probability = models.CharField(max_length=24)
     text = models.ForeignKey(Text, null=True, blank=True)
     user = models.ForeignKey(User, null=True, blank=True)
 
