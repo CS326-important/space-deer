@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import User, Text, Insight, Comment
+from .models import User, Text, Insight, Comment, GeneralInsight
 
 # Create your views here.
 
@@ -35,13 +35,13 @@ def featureoutput(request):
 def account(request):
     """
     View function for user accounts.
-    """    
+    """
     texts = Text.objects.first()
     text_str = str(texts)
     max_length = 150
     if (len(text_str) > max_length):
         text_str = (text_str[:max_length] + "...")
-        
+
     username = User.objects.first()
     comments = Comment.objects.first()
     analytics = Insight.objects.filter(user=User.objects.first())
@@ -55,7 +55,7 @@ def general_insights(request):
     """
     View function for the general insights page of the site.
     """
-    insights = Insight.objects.filter(user__isnull=True, text__isnull=True)
+    insights = GeneralInsight.objects.all()
     # TODO: personal contributions to the general insights
     personal_insights = Insight.objects.filter(user=None, text__isnull=False)
     username=None
