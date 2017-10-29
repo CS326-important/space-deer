@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+	<div class="col-9 genPage">
+		{% block left_col %}{% endblock %}
+	</div>
+	<div class="col-3 genInsights">
+		{% block right_col %}{% endblock %}
+	</div>
+</div>
+{% endblock %}
+
