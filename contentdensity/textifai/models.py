@@ -105,4 +105,23 @@ class Comment(models.Model):
         """
         return self.content
 
+class GeneralInsight(models.Model):
+    """
+    Model representing a general insight
+    """
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
+    name = models.CharField(max_length=100)
+    value = models.CharField(max_length=24)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular GeneralInsight instance.
+        """
+        return reverse('gen-insight-detail', args=[str(self.m_id)])
+
+    def __str__(self):
+        """
+        String for representing the GeneralInsight object.
+        """
+        return self.name
 
