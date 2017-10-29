@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>USER PAGE</h1>
-
-  <p>Welcome to your user page, {{ username }}!</p>
+<div class="row justify-content-center">
+    <h1>Your Profile</h1>
+</div>
+<br>
+<div class="row justify-content-center">
+    <p>Welcome to your user page, <em>{{ username }}! </em></p>
+</div>
 
 <div class="container-fluid mainContent">
             <div class="row justify-content-center">
                 <div class="col-10">
                     <div class="row justify-content-center">
-                        <div class="col-10 siteTitle">
-                            <h1> Your Page </h1> 
-                        </div>
                     </div>
                     <div style="width:33%; float:left;" class="card">
                         <div class="card-header">
@@ -21,13 +22,7 @@
                             </center>
                         </div>
                         <div class="card-body">
-                            <h3> &quot;Lorem ipsum&quot; </h3>
-                            <!--img-->
-                            <br>Highest Rated Tags: <em>&quot;Happy&quot;, &quot;Boats&quot; </em>
-                            <br>
-                            <h3> &quot;Epsum factorial&quot; </h3>
-                            <!--img-->
-                            <br>Highest Rated Tags: <em>&quot;Adult&quot;, &quot;Boats&quot; </em>
+                            <h3> {{ texts }} </h3>
                         </div>
                     </div>
                     <div style="width:33%; float:right;" class="card">
@@ -38,8 +33,7 @@
                             </center>
                         </div>
                         <div class="card-body">
-                            <h3> Mood: <em> 66% Happy </em> </h3>
-                            <h3> Boats Average: <em> 100% </em> </h3>
+                            <h3> {{ analytics }} </h3>
                         </div>
                     </div>
                     <div style="width:33%; float:right;" class="card">
@@ -50,14 +44,7 @@
                             </center>
                         </div>
                         <div class="card-body">
-                            <h3> On &quot;Lorem factorial&quot; by space_bob88 </h3>
-                            <br>&quot;You definitely could improve the happiness of this piece by adding
-                            some text relating to...&quot;
-                            <br> <em> Commented 2 days ago </em>
-                            <h3> On &quot;Epsum ipsum&quot; by RachelTheHero </h3>
-                            &quot;Nice work here! You really give me the impression that you know
-                            about boats.&quot;
-                            <br> <em> Commented 1 week ago </em>
+                            <h3> {{ comments }} </h3>
                         </div>
                     </div>
                 </div>
