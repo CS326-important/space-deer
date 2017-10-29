@@ -67,8 +67,8 @@ class Insight(models.Model):
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
     tone = models.CharField(max_length=100)
     probability = models.FloatField()
-    text = models.ForeignKey(Text, null=True, blank=True)
-    user = models.ForeignKey(User, null=True, blank=True)
+    text = models.ForeignKey(Text)
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         """
