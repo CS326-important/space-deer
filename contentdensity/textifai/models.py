@@ -109,8 +109,7 @@ class GeneralInsight(models.Model):
     """
     Model representing a general insight
     """
-    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
-    name = models.CharField(max_length=100)
+    name = models.CharField(primary_key=True, max_length=24)
     value = models.CharField(max_length=24)
 
     def get_absolute_url(self):
@@ -124,4 +123,12 @@ class GeneralInsight(models.Model):
         String for representing the GeneralInsight object.
         """
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(type(self), self).save(*args, **kwargs)
+
+    def clean(self):
+        self.name = self.name.strip()
+        self.value = self.value.strip()
 
