@@ -41,7 +41,7 @@ class Text(models.Model):
     """
     Model representing text from user input.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
     content = models.TextField( help_text="Enter text here")
     time_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
@@ -51,7 +51,7 @@ class Text(models.Model):
         """
         Returns the url to access a particular Text instance.
         """
-        return reverse('text-detail', args=[str(self.id)])
+        return reverse('text-detail', args=[str(self.m_id)])
 
     def __str__(self):
         """
@@ -64,17 +64,17 @@ class Insight(models.Model):
     """
     Model representing an insight associated with text.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
     tone = models.CharField(max_length=100)
     probability = models.FloatField()
-    text = models.ForeignKey(Text)
-    user = models.ForeignKey(User)
+    text = models.ForeignKey(Text, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
 
     def get_absolute_url(self):
         """
         Returns the url to access a particular Insight instance.
         """
-        return reverse('insight-detail', args=[str(self.id)])
+        return reverse('insight-detail', args=[str(self.m_id)])
 
     def __str__(self):
         """
@@ -87,7 +87,7 @@ class Comment(models.Model):
     """
     Model representing a comment associated with text and a user.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular comment.")
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular comment.")
     content = models.TextField(max_length=500)
     text = models.ForeignKey(Text)
     time_created = models.DateTimeField(auto_now_add=True)
@@ -97,10 +97,31 @@ class Comment(models.Model):
         """
         Returns the url to access a particular Comment instance.
         """
-        return reverse('comment-detail', args=[str(self.id)])
+        return reverse('comment-detail', args=[str(self.m_id)])
 
     def __str__(self):
         """
         String for representing the Comment object.
         """
         return self.content
+
+class GeneralInsight(models.Model):
+    """
+    Model representing a general insight
+    """
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
+    name = models.CharField(max_length=100)
+    value = models.CharField(max_length=24)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular GeneralInsight instance.
+        """
+        return reverse('gen-insight-detail', args=[str(self.m_id)])
+
+    def __str__(self):
+        """
+        String for representing the GeneralInsight object.
+        """
+        return self.name
+

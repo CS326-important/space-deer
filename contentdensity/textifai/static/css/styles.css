@@ -18,8 +18,9 @@ body {
   background-color: #eee;
   text-align: center;
   margin-bottom: 15px;
-  margin-right: 15px;
+  margin-top: 15px;
   padding: 25px 10px;
+  width: 100%;
 }
 
 .insightVal {
@@ -44,14 +45,5 @@ body {
 
 .genPage .insightCard {
   display: inline-block;
-  max-width: 50%;
 }
 
-.block {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.block > * {
-  flex: 1 25%;
-}

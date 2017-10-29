@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.db.models import Q
+from .models import User, Text, Insight, Comment, GeneralInsight
 
 # Create your views here.
 
@@ -22,22 +24,44 @@ def featureoutput(request):
     """
     View function for the feature output page of the site.
     """
-
+    mock_text = Text.objects.first()
+    mock_insights = Insight.objects.filter(user=mock_text.user)
     return render(
         request,
         'featureoutput.html',
-        context={},
+        context={'mock_text': mock_text.content, 'mock_insights': mock_insights},
     )
-
-from .models import User
 
 def account(request):
     """
     View function for user accounts.
     """
-    username = User._meta.get_field('username')
+    texts = Text.objects.first()
+    text_str = str(texts)
+    max_length = 150
+    if (len(text_str) > max_length):
+        text_str = (text_str[:max_length] + "...")
+
+    username = User.objects.first()
+    comments = Comment.objects.first()
+    analytics = Insight.objects.filter(user=User.objects.first())
     return render(
         request,
         "account.html",
-        context={'username':username}
+        context={'username':username,'texts':text_str,'comments':comments,'analytics':analytics}
     )
+
+def general_insights(request):
+    """
+    View function for the general insights page of the site.
+    """
+    insights = GeneralInsight.objects.all()
+    # TODO: personal contributions to the general insights
+    personal_insights = Insight.objects.filter(user=None, text__isnull=False)
+    username=None
+    return render(
+        request,
+        'general-insights.html',
+        context={'insights':insights, 'personal_insights':personal_insights, 'username':username},
+    )
+
