@@ -9,7 +9,7 @@ class User(models.Model):
     """
     Model representing a user account.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
     email = models.CharField(max_length=40)
     username = models.CharField(max_length=20)
 
@@ -28,7 +28,7 @@ class User(models.Model):
         """
         Returns the url to access a particular User instance.
         """
-        return reverse('user-detail', args=[str(self.id)])
+        return reverse('user-detail', args=[str(self.m_id)])
 
     def __str__(self):
         """
