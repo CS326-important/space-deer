@@ -120,3 +120,6 @@ ENV/
 # VSCode
 .vscode
 */.vscode
+
+# Django database
+db.sqlite3
