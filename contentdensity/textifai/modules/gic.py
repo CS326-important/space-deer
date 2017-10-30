@@ -26,7 +26,7 @@ def add_general_insight(name, func):
     general_insights[name] = general_insight_calculator(name, func)
 
 def calc_and_save_general_insights():
-    for insight in general_insights:
+    for insight in general_insights.values():
         insight.calc_and_save()
 
 ########################################################################
