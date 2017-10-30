@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from .models import User, Text, Insight, Comment, GeneralInsight
+from .modules import gic
 
 # Create your views here.
 
@@ -55,6 +56,7 @@ def general_insights(request):
     """
     View function for the general insights page of the site.
     """
+    gic.calc_and_save_general_insights()
     insights = GeneralInsight.objects.all()
     # TODO: personal contributions to the general insights
     personal_insights = Insight.objects.filter(user=None, text__isnull=False)
