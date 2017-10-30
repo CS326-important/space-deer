@@ -39,10 +39,6 @@ body {
   padding: 15px;
 }
 
-.genPage {
-  display: flex;
-}
-
 .genPage .insightCard {
   display: inline-block;
 }
