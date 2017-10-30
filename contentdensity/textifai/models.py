@@ -9,7 +9,7 @@ class User(models.Model):
     """
     Model representing a user account.
     """
-    userid = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
     email = models.CharField(max_length=40)
     username = models.CharField(max_length=20)
 
@@ -23,13 +23,12 @@ class User(models.Model):
         (DARK, 'Dark'),
     )
     theme = models.CharField(max_length=2, choices=THEMES, default=LIGHT)
-    mature_content = models.BooleanField()
 
     def get_absolute_url(self):
         """
         Returns the url to access a particular User instance.
         """
-        return reverse('user-detail', args=[str(self.userid)])
+        return reverse('user-detail', args=[str(self.m_id)])
 
     def __str__(self):
         """
@@ -43,9 +42,10 @@ class Text(models.Model):
     Model representing text from user input.
     """
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
-    content = models.CharField(max_length=1000)
-    time = models.DateTimeField(auto_now_add=True)
+    content = models.TextField( help_text="Enter text here")
+    time_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
+    mature_content = models.BooleanField()
 
     def get_absolute_url(self):
         """
@@ -67,8 +67,8 @@ class Insight(models.Model):
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular insight.")
     tone = models.CharField(max_length=100)
     probability = models.FloatField()
-    text = models.ForeignKey(Text, null=True, blank=True)
-    user = models.ForeignKey(User, null=True, blank=True)
+    text = models.ForeignKey(Text)
+    user = models.ForeignKey(User)
 
     def get_absolute_url(self):
         """
@@ -88,9 +88,9 @@ class Comment(models.Model):
     Model representing a comment associated with text and a user.
     """
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular comment.")
-    content = models.CharField(max_length=500)
+    content = models.TextField(max_length=500)
     text = models.ForeignKey(Text)
-    time = models.DateTimeField(auto_now_add=True)
+    time_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
 
     def get_absolute_url(self):

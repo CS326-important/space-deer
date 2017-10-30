@@ -8,5 +8,3 @@ urlpatterns = [
     url(r'^account', views.account, name='account'),
     url(r'^general-insights$', views.general_insights, name='general-insights'),
 ]
-
-
