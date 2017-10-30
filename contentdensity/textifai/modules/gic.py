@@ -18,11 +18,12 @@ class general_insight_calculator:
         entry.value = self.do_calc()
         entry.save()
 
-general_insights = [ ]
+# Dictionary of general insight name to general insight calculator
+general_insights = { }
 
 def add_general_insight(name, func):
     global general_insights
-    general_insights.append(general_insight_calculator(name, func))
+    general_insights[name] = general_insight_calculator(name, func)
 
 def calc_and_save_general_insights():
     for insight in general_insights:
