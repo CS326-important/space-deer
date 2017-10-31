@@ -37,19 +37,14 @@ def account(request):
     """
     View function for user accounts.
     """
-    texts = Text.objects.first()
-    text_str = str(texts)
-    max_length = 150
-    if (len(text_str) > max_length):
-        text_str = (text_str[:max_length] + "...")
-
-    username = User.objects.first()
-    comments = Comment.objects.first()
-    analytics = Insight.objects.filter(user=User.objects.first())
+    mock_user = User.objects.first()
+    texts = Text.objects.filter(user=mock_user)
+    comments = Comment.objects.filter(user=mock_user)
+    analytics = Insight.objects.filter(user=mock_user)
     return render(
         request,
         "account.html",
-        context={'username':username,'texts':text_str,'comments':comments,'analytics':analytics}
+        context={'user':mock_user,'texts':texts,'comments':comments,'analytics':analytics}
     )
 
 def general_insights(request):

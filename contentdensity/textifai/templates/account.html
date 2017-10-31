@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="row justify-content-center">
+{% block page_head %}
     <h1>Your Profile</h1>
-</div>
+{% endblock %}
 <br>
-<div class="row justify-content-center">
-    <p>Welcome to your user page, <em>{{ username }}! </em></p>
-</div>
+{% block content %}
+    <p>Welcome to your user page, <em>{{ user }}! </em></p>
 
 <div class="container-fluid mainContent">
             <div class="row justify-content-center">
@@ -21,31 +19,59 @@
                                 <em> What have you written recently? </em> 
                             </center>
                         </div>
+                        {% if texts %}
+                        {% for text in texts %}
                         <div class="card-body">
-                            <h3> {{ texts }} </h3>
+                            <h3> {{ text }} </h3>
+                            <em> {{ text.time_created }} </em>
                         </div>
-                    </div>
-                    <div style="width:33%; float:right;" class="card">
-                        <div class="card-header">
-                            <center>
-                                <h2> Writing Analytics </h2>
-                                <em> Learn exciting facts about your writing! </em> 
-                            </center>
-                        </div>
+                        {% endfor %}
+                        {% else %}
                         <div class="card-body">
-                            <h3> {{ analytics }} </h3>
+                            <h3> Nothing yet. Why not try submitting something? </h3>
                         </div>
+                        {% endif %}
                     </div>
-                    <div style="width:33%; float:right;" class="card">
+                    <div style="width:33%; float:left;" class="card">
                         <div class="card-header">
                             <center>
                                 <h2> Recent Comments </h2>
                                 <em> What have you been telling people lately? </em> 
                             </center>
                         </div>
+                        {% if comments %}
+                        {% for comment in comments %}
                         <div class="card-body">
-                            <h3> {{ comments }} </h3>
+                            <h3> {{ comment }} </h3>
+                            - On {{ comment.user }}'s text, "{{ comment.text }}"
+                            <br>
+                            <em> {{ comment.time_created }} </em>
                         </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="card-body">
+                            <h3> Nothing yet. Tell people what you think! </h3>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div style="width:33%; float:left;" class="card">
+                        <div class="card-header">
+                            <center>
+                                <h2> Writing Analytics </h2>
+                                <em> Learn exciting facts about your writing! </em> 
+                            </center>
+                        </div>
+                        {% if analytics %}
+                        {% for insight in analytics %}
+                        <div class="card-body">
+                            <h3> {{ insight.tone }} : {{ insight.probability }} % </h3>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="card-body">
+                            <h3> Nothing yet. Why not try submitting something? </h3>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
