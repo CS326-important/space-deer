@@ -57,7 +57,7 @@ def general_insights(request):
     View function for the general insights page of the site.
     """
     gic.calc_and_save_general_insights()
-    insights = GeneralInsight.objects.all()
+    insights = GeneralInsight.objects.order_by('?')
     # TODO: personal contributions to the general insights
     personal_insights = Insight.objects.filter(user=None, text__isnull=False)
     username=None
