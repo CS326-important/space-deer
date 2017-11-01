@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 
+{% block page_head %}
+    <h1>Text Input</h1>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-10 siteTitle">
-            <h1>Analyze Text</h1>
+    <div class="row justify-content-center" style="width:100%;">
+        <div class="container">
+            <div class="form-group">
+                <label for="textAnalysisInput">Enter text</label>
+                <textarea class="form-control" style="resize: none;"
+                          id="textAnalysisInput" rows="15"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="uploadTextFile">Upload text</label>
+                <input type="file" class="form-control-file" id="uploadTextFile"
+                       aria-describedby="fileHelp">
+                <small id="fileHelp" class="form-text text-muted">Accepted
+                    formats: [formats to be determined]
+                </small>
+            </div>
+            <button type="submit"
+                    onclick="location.href = 'featureoutput.html';"
+                    class="btn btn-primary">Analyze
+            </button>
         </div>
     </div>
-    <div class="form-group">
-        <label for="textAnalysisInput">Enter text</label>
-        <textarea class="form-control" style="resize: none;"
-                  id="textAnalysisInput" rows="15"></textarea>
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="uploadTextFile">Upload text</label>
-        <input type="file" class="form-control-file" id="uploadTextFile"
-               aria-describedby="fileHelp">
-        <small id="fileHelp" class="form-text text-muted">Accepted formats: [formats to be determined]</small>
-    </div>
-    <button type="submit" onclick="location.href = 'featureoutput.html';" class="btn btn-primary">Analyze</button>
-</div>
 {% endblock %}

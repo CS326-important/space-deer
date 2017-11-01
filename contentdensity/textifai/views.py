@@ -29,12 +29,14 @@ def featureoutput(request):
     mock_text = Text.objects.filter(user=mock_user)[1]
     mock_insights = Insight.objects.filter(text=mock_text)
     g_insights = GrammaticalInsight.objects.filter(text=mock_text).first()
+    comments = Comment.objects.filter(text=mock_text)
     return render(
         request,
         'featureoutput.html',
         context={'mock_text': mock_text.content
             , 'mock_insights': mock_insights
-            , 'g_insights': g_insights},
+            , 'g_insights': g_insights
+            , 'comments': comments},
     )
 
 def account(request):

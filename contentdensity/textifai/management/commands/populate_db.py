@@ -8,6 +8,7 @@ class Command(BaseCommand):
     help = 'Run this script to populate database w/ sample users.'
     user1 = None
     user2 = None
+    user3 = None
     text1 = None
     text2 = None
     text3 = None
@@ -17,6 +18,8 @@ class Command(BaseCommand):
         self.user1.save()
         self.user2 = User(m_id=uuid.uuid4(), username='michelle', email='shipluvr@aol.net')
         self.user2.save()
+        self.user3 = User(username='William Shakespeare', email='billshakes@gmail.com')
+        self.user3.save()
 
     def create_texts(self):
         self.text1 = Text(m_id=uuid.uuid4(), content='Wherefore art thou, Romeo?', time_created=datetime.now(), user=self.user1, mature_content = False)
@@ -60,6 +63,12 @@ class Command(BaseCommand):
         comment1.save()
         comment2 = Comment(m_id=uuid.uuid4(), content='You can reduce the violence of this text by replacing "attack" with something more positive, like "bring you to Hawaii".', text=self.text1, time_created=datetime.now(), user=self.user2)
         comment2.save()
+        Comment(content="Cool! Did you write this? :^)", text=self.text3,
+                user=self.user2).save()
+        Comment(content="yeah. I should try to make it more positive though.",
+                text=self.text3, user=self.user1).save()
+        Comment(content="This is a pretty solid analysis.",
+                text=self.text3, user=self.user3).save()
 
     def create_general_insights(self):
         gen_insight1 = GeneralInsight(name="Global Happiness",value="High")

@@ -73,3 +73,23 @@
             class="badge badge-primary">{{ g_insights.average_word_length }}</span>
     </h5>
 {% endblock %}
+
+{% block footer %}
+    <br>
+    <div class="row justify-content-center">
+        <h5>Login to add a comment</h5>
+    </div>
+    <br>
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ comment.user.username }}</strong> <span
+                    class="text-muted">{{ comment.time_created }}</span>
+            </div>
+            <div class="card-body">
+                {{ comment.content }}
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}
