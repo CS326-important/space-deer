@@ -42,10 +42,14 @@ class Text(models.Model):
     Model representing text from user input.
     """
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular text.")
-    content = models.TextField( help_text="Enter text here")
+    title = models.CharField(max_length=40,  blank=True, help_text="Enter a title for your entry")
+    content = models.TextField(help_text="Enter text here")
     time_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
     mature_content = models.BooleanField()
+
+    class Meta:
+        ordering = ["-time_created"]
 
     def get_absolute_url(self):
         """
