@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Text, Insight, Comment, User, GeneralInsight
+from .models import Text, Insight, Comment, User, GeneralInsight, GrammaticalInsight
 
 # Register your models here.
 
@@ -23,7 +23,13 @@ class CommentAdmin(admin.ModelAdmin):
 class UserAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(GeneralInsight)
-class UserAdmin(admin.ModelAdmin):
+class GeneralInsightAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(GrammaticalInsight)
+class GrammaticalInsightAdmin(admin.ModelAdmin):
     pass
 

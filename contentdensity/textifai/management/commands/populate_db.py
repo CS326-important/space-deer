@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from textifai.models import User, Text, Insight, Comment, GeneralInsight
+from textifai.models import User, Text, Insight, Comment, GeneralInsight, GrammaticalInsight
 import uuid
 from datetime import datetime
 
@@ -67,9 +67,24 @@ class Command(BaseCommand):
         gen_insight2 = GeneralInsight(name="Global Violence",value="Very High")
         gen_insight2.save()
 
+    def create_grammaticalinsights(self):
+        GrammaticalInsight(user=self.user1
+                           , text=self.text3
+                           , positivity='Low'
+                           , most_common_pos=GrammaticalInsight.NOUN
+                           , reading_level='9-10th Grade'
+                           , reading_time='18 seconds'
+                           , speaking_time='27 seconds'
+                           , total_words=79
+                           , total_chars=439
+                           , most_common_word='the'
+                           , average_word_length=4
+                           ).save()
+
     def handle(self, *args, **options):
         self.create_users()
         self.create_texts()
         self.create_insights()
         self.create_comments()
         self.create_general_insights()
+        self.create_grammaticalinsights()

@@ -82,6 +82,75 @@ class Insight(models.Model):
         """
         return self.tone
 
+class GrammaticalInsight(models.Model):
+    """
+    Model representing a grammatical insight associated with text.
+    """
+    ADJECTIVE = 'ADJ'
+    ADPOSITION = 'ADP'
+    ADVERB = 'ADV'
+    CONJUNCTION = 'CONJ'
+    DETERMINER = 'DET'
+    NOUN = 'NOUN'
+    NUMERICAL = 'NUM'
+    PARTICLE = 'PRT'
+    PRONOUN = 'PRO'
+    VERB = 'VERB'
+    PUNCTUATION = '.'
+    OTHER = 'X'
+
+    PARTS_OF_SPEECH = (
+        (ADJECTIVE, 'Adjective'),
+        (ADPOSITION, 'Adposition'),
+        (ADVERB, 'Adverb'),
+        (CONJUNCTION, 'Conjunection'),
+        (DETERMINER, 'Determiner'),
+        (NOUN, 'Noun'),
+        (NUMERICAL, 'Numerical'),
+        (PARTICLE, 'Particle'),
+        (PRONOUN, 'Pronoun'),
+        (VERB, 'Verb'),
+        (PUNCTUATION, 'Punctuation'),
+        (OTHER, 'Other'),
+    )
+
+    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4
+                            , help_text="Unique ID for GrammaticalInsight.")
+    user = models.ForeignKey(User)
+    text = models.ForeignKey(Text)
+
+    positivity = models.CharField(max_length=24)
+    most_common_pos = models.CharField(max_length=4, choices=PARTS_OF_SPEECH)
+    reading_level = models.CharField(max_length=100)
+    reading_time = models.CharField(max_length=100)
+    speaking_time = models.CharField(max_length=100)
+    total_words = models.IntegerField()
+    total_chars = models.IntegerField()
+    most_common_word = models.CharField(max_length=100)
+    average_word_length = models.IntegerField()
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular GrammaticalInsight instance.
+        """
+        return reverse('grammaticalinsight-detail', args=[str(self.m_id)])
+
+    def __str__(self):
+        """
+        String for representing the GrammaticalInsight object.
+        """
+        return "positivity: {}, most_common_pos: {}, reading_level: {}, " \
+               "reading_time: {}, speaking_time: {}, total_words: {}, " \
+               "total_chars: {}, most_common_word: {}, average_word_length: {}" \
+               "".format(self.positivity
+                         , self.most_common_pos
+                         , self.reading_level
+                         , self.reading_time
+                         , self.speaking_time
+                         , self.total_words
+                         , self.total_chars
+                         , self.most_common_word
+                         , self.average_word_length)
 
 class Comment(models.Model):
     """

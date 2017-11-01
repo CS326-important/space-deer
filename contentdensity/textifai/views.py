@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import User, Text, Insight, Comment, GeneralInsight
+from .models import User, Text, Insight, Comment, GeneralInsight, GrammaticalInsight
 from .modules import gic
 
 # Create your views here.
@@ -28,10 +28,13 @@ def featureoutput(request):
     mock_user = User.objects.all()[0]
     mock_text = Text.objects.filter(user=mock_user)[1]
     mock_insights = Insight.objects.filter(text=mock_text)
+    g_insights = GrammaticalInsight.objects.filter(text=mock_text).first()
     return render(
         request,
         'featureoutput.html',
-        context={'mock_text': mock_text.content, 'mock_insights': mock_insights},
+        context={'mock_text': mock_text.content
+            , 'mock_insights': mock_insights
+            , 'g_insights': g_insights},
     )
 
 def account(request):
