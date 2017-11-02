@@ -1,4 +1,34 @@
 {% extends "base.html" %}
 
+{% block page_head %}
+<h1>Textifai</h1>
+<form class="search">
+	<input type="search" placeholder="Search"><input type="submit" value=" ">
+</form>
+{% endblock %}
+
+<!-- Recent Posts -->
 {% block content %}
+<h2>Recent Posts</h2>
+{% for entry in recent %}
+	<div class="insightCard recents">
+		{% if entry.title %}
+			<h3>{{ entry.title|safe }} <span class="author">By: {{ entry.user }}</span></h3>
+		{% else %}
+			<h3>{{ entry.time_created }} <span class="author">By: {{ entry.user }}</span></h3>
+		{% endif %}
+		<p class="content">{{ entry.content|safe }}</p>
+		<a href="{% url 'featureoutput' %}">View Text</a>
+	</div>
+{% endfor %}
+{% endblock %}
+
+<!-- Scripts -->
+{% block inline_js %}
+<script>
+	let content = document.querySelectorAll('.content');
+	content.forEach((i) => {
+		if (i.innerText.length > 500) i.innerText = i.innerText.substring(0, 400) + '...';
+	});
+</script>
 {% endblock %}

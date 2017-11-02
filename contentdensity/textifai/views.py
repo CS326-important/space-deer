@@ -9,7 +9,8 @@ def index(request):
     """
     View function for the homepage of the site
     """
-    return render(request, 'index.html', context={})
+    recent = Text.objects.all()[:4]
+    return render(request, 'index.html', context={'recent':recent})
 
 def textinput(request):
     """
