@@ -1,24 +1,26 @@
-{% extends "base_2col.html" %}
+{% extends "base.html" %}
 
-<!-- Right Column -->
-{% block left_col %}
-<h2>Recent Entries</h2>
+{% block page_head %}
+<h1>Textifai</h1>
+<form class="search">
+	<input type="search" placeholder="Search"><input type="submit" value=" ">
+</form>
+{% endblock %}
+
+<!-- Recent Posts -->
+{% block content %}
+<h2>Recent Posts</h2>
 {% for entry in recent %}
-	<div class="recentCard">
+	<div class="insightCard recents">
 		{% if entry.title %}
-			<h3>{{ entry.title|safe }}</h3>
+			<h3>{{ entry.title|safe }} <span class="author">By: {{ entry.user }}</span></h3>
 		{% else %}
-			<h3>{{ entry.time_created }}</h3>
+			<h3>{{ entry.time_created }} <span class="author">By: {{ entry.user }}</span></h3>
 		{% endif %}
 		<p class="content">{{ entry.content|safe }}</p>
 		<a href="{% url 'featureoutput' %}">View Text</a>
 	</div>
 {% endfor %}
-{% endblock %}
-
-<!-- Left Column -->
-{% block right_col %}
-
 {% endblock %}
 
 <!-- Scripts -->
