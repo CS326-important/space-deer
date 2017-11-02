@@ -27,7 +27,7 @@ def featureoutput(request):
     View function for the feature output page of the site.
     """
     mock_user = User.objects.all()[0]
-    mock_text = Text.objects.filter(user=mock_user)[1]
+    mock_text = Text.objects.filter(user=mock_user)[0]
     mock_insights = Insight.objects.filter(text=mock_text)
     g_insights = GrammaticalInsight.objects.filter(text=mock_text).first()
     comments = Comment.objects.filter(text=mock_text)
