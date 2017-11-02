@@ -92,9 +92,10 @@ def _calc_most_long_winded_user():
     count = Counter()
 
     for user in User.objects.all():
-        count[user] = sum([ len(text.content.split())
-                for text in Text.objects.filter(user=user)])
-        count[user] /= len(Text.objects.filter(user=user))
+        user_text = Text.objects.filter(user=user)
+        if len(user_text) > 0:
+            count[user] = (sum([len(text.content.split()) for text in user_text])
+                           / len(user_text))
 
     return count.most_common(1)[0][0].username
 
