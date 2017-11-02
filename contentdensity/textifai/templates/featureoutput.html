@@ -1,30 +1,28 @@
-{% extends "base.html" %}
+{% extends "base_2col.html" %}
 
-{% block content %}
-<div class="container">
-    <br>
-    <div class="card">
-        <div class="card-header">
-            Your Submission
-        </div>
-        <div class="card-body">
-            {{ mock_text }}
-            <!--Ham. O, I die, Horatio; The potent poison quite o&apos;er-crows my spirit:-->
-            <!--I cannot live to hear the news from England; But I do prophesy the election-->
-            <!--lights On Fortinbras: he has my dying voice; So tell him, with the occurrents,-->
-            <!--more and less, Which have solicited.&#45;&#45;the rest is silence. [Dies.] Hor.-->
-            <!--Now cracks a noble heart.&#45;&#45;Good night, sweet prince, And flights of angels-->
-            <!--sing thee to thy rest! Why does the drum come hither? [March within.]-->
-        </div>
-        <table
-                class="table">
-            <thead>
-            <tr>
-                <th>Insights</th>
-                <th>Probability</th>
-            </tr>
-            </thead>
-            <tbody>
+{% block page_head %}
+    <h1>Text Analysis</h1>
+{% endblock %}
+
+{% block left_col %}
+    <div class="container">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                Your Submission
+            </div>
+            <div class="card-body">
+                {{ mock_text }}
+            </div>
+            <table
+                    class="table">
+                <thead>
+                <tr>
+                    <th>Insights</th>
+                    <th>Probability</th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for item in mock_insights %}
                     <tr>
                         <td>
@@ -35,31 +33,63 @@
                         </td>
                     </tr>
                 {% endfor %}
-            <!--<tr>-->
-                <!--<td>Negative</td>-->
-                <!--<td>0.69</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>Shakespeare</td>-->
-                <!--<td>0.92</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>Death</td>-->
-                <!--<td>0.99</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>Politics</td>-->
-                <!--<td>0.84</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>Music</td>-->
-                <!--<td>0.51</td>-->
-            <!--</tr>-->
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <button type="submit" onclick="location.href = 'textinput.html';"
+                class="btn btn-primary">New Submission
+        </button>
+        <button type="submit" onclick="location.href = 'textinput.html';"
+                class="btn">Edit Submission
+        </button>
+    </div>
+{% endblock %}
+
+{% block right_col %}
+    <h5>Positivity <span
+            class="badge badge-primary">{{ g_insights.positivity }}</span>
+    </h5>
+    <h5>Most Common Part of Speech <span
+            class="badge badge-primary">{{ g_insights.most_common_pos }}</span>
+    </h5>
+    <h5>Reading Level <span
+            class="badge badge-primary">{{ g_insights.reading_level }} </span>
+    </h5>
+    <h5>Reading Time <span
+            class="badge badge-primary">{{ g_insights.reading_time }}</span>
+    </h5>
+    <h5>Speaking Time <span
+            class="badge badge-primary">{{ g_insights.speaking_time }}</span>
+    </h5>
+    <h5>Total Words <span
+            class="badge badge-primary">{{ g_insights.total_words }}</span></h5>
+    <h5>Total Characters <span
+            class="badge badge-primary">{{ g_insights.total_chars }}</span></h5>
+    <h5>Most Common Word <span
+            class="badge badge-primary">{{ g_insights.most_common_word }}</span>
+    </h5>
+    <h5>Average Word Length <span
+            class="badge badge-primary">{{ g_insights.average_word_length }}</span>
+    </h5>
+{% endblock %}
+
+{% block footer %}
+    <br>
+    <div class="row justify-content-center">
+        <h5>Login to add a comment</h5>
     </div>
     <br>
-    <button type="submit" onclick="location.href = 'textinput.html';" class="btn btn-primary">New Submission</button>
-    <button type="submit" onclick="location.href = 'textinput.html';" class="btn">Edit Submission</button>
-</div>
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ comment.user.username }}</strong> <span
+                    class="text-muted">{{ comment.time_created }}</span>
+            </div>
+            <div class="card-body">
+                {{ comment.content }}
+            </div>
+        </div>
+        <br>
+    {% endfor %}
 {% endblock %}

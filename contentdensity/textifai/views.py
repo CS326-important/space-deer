@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import User, Text, Insight, Comment, GeneralInsight
+from .models import User, Text, Insight, Comment, GeneralInsight, GrammaticalInsight
 from .modules import gic
 
 # Create your views here.
@@ -25,31 +25,32 @@ def featureoutput(request):
     """
     View function for the feature output page of the site.
     """
-    mock_text = Text.objects.first()
-    mock_insights = Insight.objects.filter(user=mock_text.user)
+    mock_user = User.objects.all()[0]
+    mock_text = Text.objects.filter(user=mock_user)[1]
+    mock_insights = Insight.objects.filter(text=mock_text)
+    g_insights = GrammaticalInsight.objects.filter(text=mock_text).first()
+    comments = Comment.objects.filter(text=mock_text)
     return render(
         request,
         'featureoutput.html',
-        context={'mock_text': mock_text.content, 'mock_insights': mock_insights},
+        context={'mock_text': mock_text.content
+            , 'mock_insights': mock_insights
+            , 'g_insights': g_insights
+            , 'comments': comments},
     )
 
 def account(request):
     """
     View function for user accounts.
     """
-    texts = Text.objects.first()
-    text_str = str(texts)
-    max_length = 150
-    if (len(text_str) > max_length):
-        text_str = (text_str[:max_length] + "...")
-
-    username = User.objects.first()
-    comments = Comment.objects.first()
-    analytics = Insight.objects.filter(user=User.objects.first())
+    mock_user = User.objects.first()
+    texts = Text.objects.filter(user=mock_user)
+    comments = Comment.objects.filter(user=mock_user)
+    analytics = Insight.objects.filter(user=mock_user)
     return render(
         request,
         "account.html",
-        context={'username':username,'texts':text_str,'comments':comments,'analytics':analytics}
+        context={'user':mock_user,'texts':texts,'comments':comments,'analytics':analytics}
     )
 
 def general_insights(request):
