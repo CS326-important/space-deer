@@ -1,17 +1,24 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.base_user import AbstractBaseUser
 import uuid
+import datetime
 
 # Create your models here.
 
 
-class User(models.Model):
+class User(AbstractBaseUser):
     """
     Model representing a user account.
     """
     m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
     email = models.CharField(max_length=40)
     username = models.CharField(max_length=20)
+    last_login = models.DateTimeField(default=datetime.datetime.now())
+    password = "DEFAULTPASSWORD"
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'email']
 
     """
     User settings.
