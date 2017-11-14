@@ -154,12 +154,16 @@ def general_insights(request):
     """
     gic.calc_and_save_general_insights()
     insights = GeneralInsight.objects.order_by('?')
-    # TODO: personal contributions to the general insights
-    personal_insights = Insight.objects.filter(user=None, text__isnull=False)
-    username = None
+
+    if request.user.is_authenticated:
+        personal_insights = Insight.objects.filter(user=request.user,
+                    text__isnull=False)
+    else:
+        personal_insights = []
+
     return render(
         request,
         'general-insights.html',
-        context={'insights': insights, 'personal_insights': personal_insights,
-                 'username': username},
+        context={'insights': insights, 'personal_insights': personal_insights},
     )
+
