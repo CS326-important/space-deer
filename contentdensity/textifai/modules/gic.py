@@ -84,7 +84,10 @@ def _calc_most_common_word():
     for text in Text.objects.all():
         count.update([ w.translate(trans) for w in text.content.split() ])
 
-    return count.most_common(1)[0][0]
+    try:
+        return count.most_common(1)[0][0]
+    except IndexError:
+        return ''
 
 add_general_insight('Most Common Word', _calc_most_common_word)
 
@@ -100,7 +103,10 @@ def _calc_most_long_winded_user():
         except ZeroDivisionError:
             count[user] = 0
 
-    return count.most_common(1)[0][0].username
+    try:
+        return count.most_common(1)[0][0].username
+    except IndexError:
+        return ''
 
 add_general_insight('Most Long-winded User', _calc_most_long_winded_user)
 
@@ -110,6 +116,10 @@ def _calc_most_published_user():
     for user in User.objects.all():
         count[user] = len(Text.objects.filter(user=user))
 
-    return count.most_common(1)[0][0].username
+    try:
+        return count.most_common(1)[0][0].username
+    except IndexError:
+        return ''
 
 add_general_insight('Most Published User', _calc_most_published_user)
+
