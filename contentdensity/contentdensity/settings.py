@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'textifai.apps.TextifaiConfig',
+    'nltk',
+    'indicoio',
 ]
 
 MIDDLEWARE = [
