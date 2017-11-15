@@ -21,19 +21,19 @@ def index(request):
 def _save_analyzed_text(user, analysis):
     text = Text(content=analysis.text, user=user, mature_content=False)
     text.save()
-    for t in analysis.insights:
+    for t in analysis.get_insights():
         Insight(tone=t[0], probability=t[1], text=text, user=user).save()
     GrammaticalInsight(user=user
                        , text=text
-                       , positivity=analysis.sentiment
-                       , most_common_pos=analysis.most_common_pos
-                       , reading_level="WIP"
-                       , reading_time=analysis.reading_time
-                       , speaking_time=analysis.speaking_time
-                       , total_words=analysis.total_words
-                       , total_chars=analysis.total_characters
-                       , most_common_word=analysis.most_common_word
-                       , average_word_length=analysis.average_word_length
+                       , positivity=analysis.get_sentiment()
+                       , most_common_pos=analysis.get_most_common_pos()
+                       , reading_level=analysis.get_reading_level()
+                       , reading_time=analysis.get_reading_time()
+                       , speaking_time=analysis.get_speaking_time()
+                       , total_words=analysis.get_total_words()
+                       , total_chars=analysis.get_total_characters()
+                       , most_common_word=analysis.get_most_common_word()
+                       , average_word_length=analysis.get_average_word_length()
                        ).save()
     return text.m_id
 
