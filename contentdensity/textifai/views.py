@@ -50,7 +50,7 @@ def textinput(request):
             text_analysis = textanalyzer.TextAnalyzer(text)
             user = User.objects.first()
             m_id = _save_analyzed_text(user, text_analysis)
-            return HttpResponseRedirect(reverse('featureoutput'))
+            return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
     return render(
         request,
@@ -59,20 +59,19 @@ def textinput(request):
     )
 
 
-def featureoutput(request):
+def featureoutput(request, pk):
     """
     View function for the feature output page of the site.
     """
-    mock_user = User.objects.all()[0]
-    mock_text = Text.objects.filter(user=mock_user)[0]
-    mock_insights = Insight.objects.filter(text=mock_text)
-    g_insights = GrammaticalInsight.objects.filter(text=mock_text).first()
-    comments = Comment.objects.filter(text=mock_text)
+    text = get_object_or_404(Text, pk=pk)
+    insights = Insight.objects.filter(text=text)
+    g_insights = GrammaticalInsight.objects.filter(text=text).first()
+    comments = Comment.objects.filter(text=text)
     return render(
         request,
         'featureoutput.html',
-        context={'mock_text': mock_text.content
-            , 'mock_insights': mock_insights
+        context={'text': text
+            , 'insights': insights
             , 'g_insights': g_insights
             , 'comments': comments},
     )

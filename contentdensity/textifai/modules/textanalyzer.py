@@ -56,13 +56,13 @@ class TextAnalyzer:
 
     def _format_time_string(self, seconds):
         if seconds < 60:
-            return str(seconds) + " seconds"
+            return str(round(seconds, 1)) + " seconds"
         elif seconds < 3600:
-            return str(seconds / 60) + " minutes"
+            return str(round(seconds / 60, 1)) + " minutes"
         elif seconds < 21600:
-            return str(seconds / 3600) + " hours"
+            return str(round(seconds / 3600, 1)) + " hours"
         else:
-            return str(seconds / 86400) + " days"
+            return str(round(seconds / 86400, 1)) + " days"
 
     def _convert_text_to_seconds(self, wpm):
         return (len(self.text.split()) / wpm) * 60
