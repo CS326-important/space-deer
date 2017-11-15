@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -63,10 +63,14 @@ def featureoutput(request, pk):
     """
     View function for the feature output page of the site.
     """
+    if request.method == 'POST':
+        return redirect('textinput')
+
     text = get_object_or_404(Text, pk=pk)
     insights = Insight.objects.filter(text=text)
     g_insights = GrammaticalInsight.objects.filter(text=text).first()
     comments = Comment.objects.filter(text=text)
+
     return render(
         request,
         'featureoutput.html',

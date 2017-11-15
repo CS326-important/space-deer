@@ -37,12 +37,12 @@
             </table>
         </div>
         <br>
-        <button type="submit" onclick="location.href = 'textinput.html';"
-                class="btn btn-primary">New Submission
-        </button>
-        <button type="submit" onclick="location.href = 'textinput.html';"
-                class="btn">Edit Submission
-        </button>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn btn-primary">New Submission
+            </button>
+        </form>
     </div>
 {% endblock %}
 
