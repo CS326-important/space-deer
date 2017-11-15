@@ -88,8 +88,7 @@ class TextAnalyzer:
             return f.readlines()
 
     def _get_num_sentences(self):
-        sentences = len(self.text.split('.')) - 1
-        return sentences if sentences >= 1 else 1
+        return len(nltk.sent_tokenize(self.text))
 
     def _dale_chall_formula(self, difficult_words, sentences, words):
         return 0.1579 * ((difficult_words / words) * 100) \
