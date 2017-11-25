@@ -1,95 +1,110 @@
-{% extends "base_2col.html" %}
-
+{% extends "base_2col.html" %} 
 {% block page_head %}
-    <h1>Text Analysis</h1>
-{% endblock %}
-
+<h1>Text Analysis</h1>
+{% endblock %} 
 {% block left_col %}
-    <div class="container">
-        <br>
-        <div class="card">
-            <div class="card-header">
-                Your Submission
-            </div>
-            <div class="card-body">
-                {{ text }}
-            </div>
-            <table
-                    class="table">
-                <thead>
+<div class="container">
+    <br>
+    <div class="card">
+        <div class="card-header">
+            Your Submission
+        </div>
+        <div class="card-body">
+            {{ text }}
+        </div>
+        <table class="table">
+            <thead>
                 <tr>
                     <th>Insights</th>
                     <th>Probability</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 {% for item in insights %}
-                    <tr>
-                        <td>
-                            {{ item.tone }}
-                        </td>
-                        <td>
-                            {{ item.probability }}
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        {{ item.tone }}
+                    </td>
+                    <td>
+                        {{ item.probability }}
+                    </td>
+                </tr>
                 {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <br>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <button type="submit"
-                    class="btn btn-primary">New Submission
-            </button>
-        </form>
+            </tbody>
+        </table>
     </div>
-{% endblock %}
-
+    <br>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <button type="submit" name="new_submission_button" value=True class="btn btn-primary">New Submission
+        </button>
+    </form>
+</div>
+{% endblock %} 
 {% block right_col %}
-    <h5>Positivity <span
-            class="badge badge-primary">{{ g_insights.positivity }}</span>
-    </h5>
-    <h5>Most Common Part of Speech <span
-            class="badge badge-primary">{{ g_insights.most_common_pos }}</span>
-    </h5>
-    <h5>Reading Level <span
-            class="badge badge-primary">{{ g_insights.reading_level }} </span>
-    </h5>
-    <h5>Reading Time <span
-            class="badge badge-primary">{{ g_insights.reading_time }}</span>
-    </h5>
-    <h5>Speaking Time <span
-            class="badge badge-primary">{{ g_insights.speaking_time }}</span>
-    </h5>
-    <h5>Total Words <span
-            class="badge badge-primary">{{ g_insights.total_words }}</span></h5>
-    <h5>Total Characters <span
-            class="badge badge-primary">{{ g_insights.total_chars }}</span></h5>
-    <h5>Most Common Word <span
-            class="badge badge-primary">{{ g_insights.most_common_word }}</span>
-    </h5>
-    <h5>Average Word Length <span
-            class="badge badge-primary">{{ g_insights.average_word_length }}</span>
-    </h5>
-{% endblock %}
-
+<h5>Positivity
+    <span class="badge badge-primary">{{ g_insights.positivity }}</span>
+</h5>
+<h5>Most Common Part of Speech
+    <span class="badge badge-primary">{{ g_insights.most_common_pos }}</span>
+</h5>
+<h5>Reading Level
+    <span class="badge badge-primary">{{ g_insights.reading_level }} </span>
+</h5>
+<h5>Reading Time
+    <span class="badge badge-primary">{{ g_insights.reading_time }}</span>
+</h5>
+<h5>Speaking Time
+    <span class="badge badge-primary">{{ g_insights.speaking_time }}</span>
+</h5>
+<h5>Total Words
+    <span class="badge badge-primary">{{ g_insights.total_words }}</span>
+</h5>
+<h5>Total Characters
+    <span class="badge badge-primary">{{ g_insights.total_chars }}</span>
+</h5>
+<h5>Most Common Word
+    <span class="badge badge-primary">{{ g_insights.most_common_word }}</span>
+</h5>
+<h5>Average Word Length
+    <span class="badge badge-primary">{{ g_insights.average_word_length }}</span>
+</h5>
+{% endblock %} 
 {% block footer %}
-    <br>
-    <div class="row justify-content-center">
-        <h5>Login to add a comment</h5>
-    </div>
-    <br>
-    {% for comment in comments %}
-        <div class="card">
-            <div class="card-header">
-                <strong>{{ comment.user.username }}</strong> <span
-                    class="text-muted">{{ comment.time_created }}</span>
-            </div>
-            <div class="card-body">
-                {{ comment.content }}
-            </div>
+<hr>
+<br>
+<div class="row justify-content-center">
+    {% if user.is_authenticated %}
+    <div class="row justify-content-center" style="width:100%;">
+        <div class="container">
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="comment_input">Add Comment</label>
+                    <textarea class="form-control" style="resize: none;" id="id_comment_input" name="comment_input" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    {% csrf_token %}
+                    <button name="comment_input_button" type="submit" value=True class="btn btn-primary">Add Comment
+                    </button>
+                </div>
+            </form>
         </div>
-        <br>
-    {% endfor %}
+    </div>
+    {% else %}
+    <h5>Login to add a comment</h5>
+    {% endif %}
+</div>
+<br> 
+{% for comment in comments %}
+<div class="card">
+    <div class="card-header">
+        <strong>{{ comment.user.username }}</strong>
+        <span class="text-muted">{{ comment.time_created }}</span>
+    </div>
+    <div class="card-body">
+        {{ comment.content }}
+    </div>
+</div>
+<br> 
+{% endfor %} 
 {% endblock %}

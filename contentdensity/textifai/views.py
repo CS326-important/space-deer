@@ -6,7 +6,7 @@ from django.db.models import Q
 from .models import User, Text, Insight, Comment, GeneralInsight, \
     GrammaticalInsight
 from .modules import gic, textanalyzer
-from .forms import TextAnalysisForm
+from .forms import TextAnalysisForm, CommentInputForm
 
 
 # Create your views here.
@@ -50,7 +50,8 @@ def textinput(request):
         if form.is_valid():
             text = form.data['text_analysis_input']
             text_analysis = textanalyzer.TextAnalyzer(text)
-            user = User.objects.filter(m_id=request.user.id).first()
+            user = User.objects.first() 
+            #user = User.objects.filter(m_id=request.user.id).first()
             m_id = _save_analyzed_text(user, text_analysis)
             return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
@@ -65,13 +66,21 @@ def featureoutput(request, pk):
     """
     View function for the feature output page of the site.
     """
-    if request.method == 'POST':
-        return redirect('textinput')
-
     text = get_object_or_404(Text, pk=pk)
     insights = Insight.objects.filter(text=text)
     g_insights = GrammaticalInsight.objects.filter(text=text).first()
     comments = Comment.objects.filter(text=text)
+
+    if request.method == 'POST':
+        if request.POST.get("comment_input_button"): 
+            form = CommentInputForm(request.POST)
+            comment_text = form.data['comment_input']
+            user = User.objects.first() 
+            #user = User.objects.filter(m_id=request.user.id).first()
+            Comment(content=comment_text, text=text, user=user).save()
+            return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
+        if request.POST.get("new_submission_button"):
+            return redirect('textinput')
 
     return render(
         request,
