@@ -14,14 +14,14 @@ class Command(BaseCommand):
     text3 = None
 
     def create_users(self):
-        self.user1 = User(username='tom', email='tomthebomb@hotmail.com')
-        self.user1.save()
-        self.user2 = User(username='michelle', email='shipluvr@aol.net')
-        self.user2.save()
-        self.user3 = User(username='William Shakespeare', email='billshakes@gmail.com')
-        self.user3.save()
-        self.user4 = User(username='Steve', email='coffee4steve@gmail.com')
-        self.user4.save()
+        user1 = User.objects.create_user(username='oz', password='oz')
+        user1.save()
+
+        user2 = User.objects.create_user(username='tyler', password='tyler')
+        user2.save() 
+
+        User.objects.create_user(username='ash', password='ash').save()
+        User.objects.create_user(username='brandon', password='brandon').save()
 
     def create_texts(self):
         self.text1 = Text(content='Wherefore art thou, Romeo?', user=self.user1, mature_content = False)
@@ -103,8 +103,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.create_users()
-        self.create_texts()
-        self.create_insights()
-        self.create_comments()
-        self.create_general_insights()
-        self.create_grammaticalinsights()
+        # self.create_texts()
+        # self.create_insights()
+        # self.create_comments()
+        # self.create_general_insights()
+        # self.create_grammaticalinsights()
