@@ -72,13 +72,14 @@ def featureoutput(request, pk):
     comments = Comment.objects.filter(text=text)
 
     if request.method == 'POST':
-        if request.POST.get("comment_input_button"): 
+        if request.POST.get("comment_input_button"):
             form = CommentInputForm(request.POST)
-            comment_text = form.data['comment_input']
-            user = User.objects.first() 
-            #user = User.objects.filter(m_id=request.user.id).first()
-            Comment(content=comment_text, text=text, user=user).save()
-            return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
+            if form.is_valid():
+                comment_text = form.cleaned_data['comment_input']
+                user = User.objects.first()
+                #user = User.objects.filter(m_id=request.user.id).first()
+                Comment(content=comment_text, text=text, user=user).save()
+                return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
         if request.POST.get("new_submission_button"):
             return redirect('textinput')
 
