@@ -1,48 +1,10 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import User
 import uuid
 import datetime
 
 # Create your models here.
-
-
-class User(AbstractBaseUser):
-    """
-    Model representing a user account.
-    """
-    m_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this user.")
-    email = models.CharField(max_length=40)
-    username = models.CharField(max_length=20)
-    last_login = models.DateTimeField(default=datetime.datetime.now())
-    password = "DEFAULTPASSWORD"
-    USERNAME_FIELD = 'username'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'email']
-
-    """
-    User settings.
-    """
-    LIGHT = 'LI'
-    DARK = 'DA'
-    THEMES = (
-        (LIGHT, 'Light'),
-        (DARK, 'Dark'),
-    )
-    theme = models.CharField(max_length=2, choices=THEMES, default=LIGHT)
-
-    def get_absolute_url(self):
-        """
-        Returns the url to access a particular User instance.
-        """
-        return reverse('user-detail', args=[str(self.m_id)])
-
-    def __str__(self):
-        """
-        String for representing the User object.
-        """
-        return self.username
-
 
 class Text(models.Model):
     """
