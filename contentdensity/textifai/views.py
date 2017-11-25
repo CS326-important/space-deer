@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import User, Text, Insight, Comment, GeneralInsight, \
     GrammaticalInsight
@@ -38,6 +39,7 @@ def _save_analyzed_text(user, analysis):
     return text.m_id
 
 
+@login_required
 def textinput(request):
     """
     View function for the text input page of the site.
@@ -48,7 +50,7 @@ def textinput(request):
         if form.is_valid():
             text = form.data['text_analysis_input']
             text_analysis = textanalyzer.TextAnalyzer(text)
-            user = User.objects.first()
+            user = User.objects.filter(m_id=request.user.id).first()
             m_id = _save_analyzed_text(user, text_analysis)
             return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
