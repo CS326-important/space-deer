@@ -92,19 +92,20 @@ def featureoutput(request, pk):
             , 'comments': comments},
     )
 
-
+    
+@login_required
 def account(request):
     """
     View function for user accounts.
     """
-    mock_user = User.objects.first()
-    texts = Text.objects.filter(user=mock_user)
-    comments = Comment.objects.filter(user=mock_user)
-    analytics = Insight.objects.filter(user=mock_user)
+    if request.user.is_authenticated:
+        texts = Text.objects.filter(user=request.user)
+        comments = Comment.objects.filter(user=request.user)
+        analytics = Insight.objects.filter(user=request.user)
     return render(
         request,
         "account.html",
-        context={'user': mock_user, 'texts': texts, 'comments': comments,
+        context={'user': request.user, 'texts': texts, 'comments': comments,
                  'analytics': analytics}
     )
 
