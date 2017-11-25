@@ -50,9 +50,7 @@ def textinput(request):
         if form.is_valid():
             text = form.cleaned_data['text_analysis_input']
             text_analysis = textanalyzer.TextAnalyzer(text)
-            user = User.objects.first() 
-            #user = User.objects.filter(m_id=request.user.id).first()
-            m_id = _save_analyzed_text(user, text_analysis)
+            m_id = _save_analyzed_text(request.user, text_analysis)
             return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
     return render(
@@ -76,9 +74,7 @@ def featureoutput(request, pk):
             form = CommentInputForm(request.POST)
             if form.is_valid():
                 comment_text = form.cleaned_data['comment_input']
-                user = User.objects.first()
-                #user = User.objects.filter(m_id=request.user.id).first()
-                Comment(content=comment_text, text=text, user=user).save()
+                Comment(content=comment_text, text=text, user=request.user).save()
                 return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
         if request.POST.get("new_submission_button"):
             return redirect('textinput')
