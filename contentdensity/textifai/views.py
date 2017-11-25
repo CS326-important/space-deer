@@ -48,7 +48,7 @@ def textinput(request):
         form = TextAnalysisForm(request.POST)
 
         if form.is_valid():
-            text = form.data['text_analysis_input']
+            text = form.cleaned_data['text_analysis_input']
             text_analysis = textanalyzer.TextAnalyzer(text)
             user = User.objects.first() 
             #user = User.objects.filter(m_id=request.user.id).first()
