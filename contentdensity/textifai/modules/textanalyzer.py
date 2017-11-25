@@ -102,7 +102,7 @@ class TextAnalyzer(object):
 
     def get_speaking_time(self):
         """
-        Based on averselfage speaking speed of 150 wpm.
+        Based on average speaking speed of 150 wpm.
         """
         return self._format_time_string(self._convert_text_to_seconds(150))
 
