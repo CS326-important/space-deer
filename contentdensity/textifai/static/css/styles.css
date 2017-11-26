@@ -88,3 +88,22 @@ body {
   display: inline-block;
 }
 
+.account-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 300px;
+  margin-bottom: 10px;
+}
+
+.card + .card {
+  margin-left: 10px;
+}
+
+.card-header {
+  text-align: center;
+}
