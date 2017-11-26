@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count, Avg
 from .models import User, Text, Insight, Comment, GeneralInsight, \
     GrammaticalInsight
 from .modules import gic, textanalyzer
@@ -95,9 +95,9 @@ def account(request):
     View function for user accounts.
     """
     if request.user.is_authenticated:
-        texts = Text.objects.filter(user=request.user)
-        comments = Comment.objects.filter(user=request.user)
-        analytics = Insight.objects.filter(user=request.user)
+        texts = Text.objects.filter(user=request.user)[:3]
+        comments = Comment.objects.filter(user=request.user)[:3]
+        analytics = Insight.objects.filter(user=request.user).values('tone').annotate(Avg('probability')).order_by('-probability__avg')[:5]
     return render(
         request,
         "account.html",

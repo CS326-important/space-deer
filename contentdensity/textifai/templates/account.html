@@ -16,7 +16,7 @@
             {% if texts %}
             {% for text in texts %}
             <div class="card-body">
-                <h3> {{ text }} </h3>
+                <h3> {{ text|truncatewords:20 }} </h3>
                 <em> {{ text.time_created }} </em>
             </div>
             {% endfor %}
@@ -36,7 +36,7 @@
             {% for comment in comments %}
             <div class="card-body">
                 <h3> {{ comment }} </h3>
-                - On {{ comment.user }}'s text, "{{ comment.text }}"
+                - On {{ comment.user }}'s text, "{{ comment.text|truncatewords:20 }}"
                 <br>
                 <em> {{ comment.time_created }} </em>
             </div>
@@ -56,7 +56,7 @@
             {% if analytics %}
             {% for insight in analytics %}
             <div class="card-body">
-                <h3> {{ insight.tone }} : {{ insight.probability }} % </h3>
+                <h3> {{ insight.tone }} : <span class="prob">{{ insight.probability__avg|floatformat:-4 }}</span>%</h3>
             </div>
             {% endfor %}
             {% else %}
@@ -72,5 +72,14 @@
         <a href="{% url 'password_reset' %}">Reset Password</a>
     </div>
 
+{% endblock %}
+
+{% block inline_js %}
+    <script>
+    const probs = document.querySelectorAll('.prob');
+    probs.forEach((prob) => {
+        prob.innerText = (Number(prob.innerText) * 100).toFixed(2);
+    })
+    </script>
 {% endblock %}
 
