@@ -24,12 +24,14 @@
 					<a href="{% url 'general-insights' %}" class="nav-link nav-item">General Insights</a>
                     <a href="{% url 'textinput' %}" class="nav-link nav-item">Add</a>
 				</div>
-                <a href="{% url 'account' %}" class="nav-link">My Account</a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="nav-link">Logout</a> 
-                {% else %}
-                    <a href="{% url 'login' %}" class="nav-link">Login</a>
-                {% endif %}
+				<div class="account-nav-links nav-link">
+					{% if user.is_authenticated %}
+						<a href="{% url 'account' %}">My Account</a>
+						<a href="{% url 'logout' %}" class="log">Logout</a> 
+					{% else %}
+						<a href="{% url 'login' %}" class="log">Login</a>
+					{% endif %}
+				</div>
 			</div>
 		</nav>
 		{% endblock %}

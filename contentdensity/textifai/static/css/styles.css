@@ -2,6 +2,14 @@ body {
   margin: 0;
 }
 
+.account-nav-link {
+  margin-left: auto;
+}
+
+.log {
+  margin-left: 20px;
+}
+
 .mainContent {
   margin-top: 40px;
 }
