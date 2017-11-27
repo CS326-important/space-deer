@@ -65,6 +65,7 @@ def featureoutput(request, pk):
     View function for the feature output page of the site.
     """
     text = get_object_or_404(Text, pk=pk)
+    author = text.user
     insights = Insight.objects.filter(text=text)
     g_insights = GrammaticalInsight.objects.filter(text=text).first()
     comments = Comment.objects.filter(text=text)
@@ -83,6 +84,7 @@ def featureoutput(request, pk):
         request,
         'featureoutput.html',
         context={'text': text
+            , 'author': author
             , 'insights': insights
             , 'g_insights': g_insights
             , 'comments': comments},
