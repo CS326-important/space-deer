@@ -6,7 +6,7 @@ from django.db.models import Q, Count, Avg
 from .models import User, Text, Insight, Comment, GeneralInsight, \
     GrammaticalInsight
 from .modules import gic, textanalyzer
-from .forms import TextAnalysisForm, CommentInputForm
+from .forms import *
 
 
 # Create your views here.
@@ -19,11 +19,11 @@ def index(request):
     return render(request, 'index.html', context={'recent': recent})
 
 
-def _save_analyzed_text(user, analysis):
-    text = Text(content=analysis.text, user=user, mature_content=False)
-    text.save()
-    for t in analysis.get_insights():
-        Insight(tone=t[0], probability=t[1], text=text, user=user).save()
+def _save_insights(insights, text, user):
+    list(map(lambda x: Insight(tone=x[0], probability=x[1], text=text, user=user).save(), insights))
+
+
+def _save_grammatical_insight(analysis, text, user):
     GrammaticalInsight(user=user
                        , text=text
                        , positivity=analysis.get_sentiment()
@@ -35,8 +35,31 @@ def _save_analyzed_text(user, analysis):
                        , total_chars=analysis.get_total_characters()
                        , most_common_word=analysis.get_most_common_word()
                        , average_word_length=analysis.get_average_word_length()
-                       ).save()
+                      ).save()
+
+
+def _save_text_analysis(user, analysis):
+    text = Text(content=analysis.text, user=user, mature_content=False)
+    text.save()
+
+    _save_insights(analysis.get_insights(), text, user)
+    _save_grammatical_insight(analysis, text, user)
     return text.m_id
+
+
+def _edit_text_analysis(original_text, user, analysis):
+    _delete_all_insights(original_text)
+
+    original_text.content = analysis.text
+    original_text.save()
+
+    _save_insights(analysis.get_insights(), original_text, user)
+    _save_grammatical_insight(analysis, original_text, user)
+
+
+def _delete_all_insights(text):
+    Insight.objects.filter(text=text).delete()
+    GrammaticalInsight.objects.filter(text=text).delete()
 
 
 @login_required
@@ -46,18 +69,57 @@ def textinput(request):
     """
     if request.method == 'POST':
         form = TextAnalysisForm(request.POST)
-
         if form.is_valid():
-            text = form.cleaned_data['text_analysis_input']
-            text_analysis = textanalyzer.TextAnalyzer(text)
-            m_id = _save_analyzed_text(request.user, text_analysis)
-            return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
+            return _submit_text(form, request.user)
 
-    return render(
-        request,
-        'textinput.html',
-        context={},
-    )
+    return render(request, 'textinput.html', context={},)
+
+
+def _submit_text(form, user):
+    text = form.cleaned_data['text_analysis_input']
+    text_analysis = textanalyzer.TextAnalyzer(text)
+    m_id = _save_text_analysis(user, text_analysis)
+    return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
+
+
+def _submit_comment(form, text, user):
+    comment_text = form.cleaned_data['comment_input']
+    Comment(content=comment_text, text=text, user=user).save()
+    return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
+
+
+def _submit_edited_text(form, text, user):
+    edited_text = form.cleaned_data['edited_text']
+    text_analysis = textanalyzer.TextAnalyzer(edited_text)
+    _edit_text_analysis(text, user, text_analysis)
+    return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
+
+
+def _post_featureoutput(request, text): 
+    if request.POST.get("new_submission_button"):
+        return redirect('textinput')
+
+    if request.POST.get("edit_submission_button"):
+        form = EditedTextForm(request.POST)
+        if form.is_valid():
+            return _submit_edited_text(form, text, request.user)
+
+    if request.POST.get("comment_input_button"):
+        form = CommentInputForm(request.POST)
+        if form.is_valid():
+            return _submit_comment(form, text, request.user)
+
+    return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
+
+
+def _render_featureoutput(request, text):
+    context_dict = {
+        'text': text,
+        'author': text.user,
+        'insights': Insight.objects.filter(text=text),
+        'g_insights': GrammaticalInsight.objects.filter(text=text).first(),
+        'comments': Comment.objects.filter(text=text),}
+    return render(request, 'featureoutput.html', context=context_dict)
 
 
 def featureoutput(request, pk):
@@ -65,32 +127,10 @@ def featureoutput(request, pk):
     View function for the feature output page of the site.
     """
     text = get_object_or_404(Text, pk=pk)
-    author = text.user
-    insights = Insight.objects.filter(text=text)
-    g_insights = GrammaticalInsight.objects.filter(text=text).first()
-    comments = Comment.objects.filter(text=text)
+    return _post_featureoutput(request, text) if request.method == 'POST' else\
+        _render_featureoutput(request, text)
 
-    if request.method == 'POST':
-        if request.POST.get("comment_input_button"):
-            form = CommentInputForm(request.POST)
-            if form.is_valid():
-                comment_text = form.cleaned_data['comment_input']
-                Comment(content=comment_text, text=text, user=request.user).save()
-                return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
-        if request.POST.get("new_submission_button"):
-            return redirect('textinput')
 
-    return render(
-        request,
-        'featureoutput.html',
-        context={'text': text
-            , 'author': author
-            , 'insights': insights
-            , 'g_insights': g_insights
-            , 'comments': comments},
-    )
-
-    
 @login_required
 def account(request):
     """

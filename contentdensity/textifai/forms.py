@@ -23,3 +23,11 @@ class CommentInputForm(forms.Form):
             raise ValidationError(
                 _('Invalid comment - tried to submit an empty comment'))
         return data
+
+
+class EditedTextForm(forms.Form):
+    edited_text = forms.CharField()
+
+    def clean_edited_text(self):
+        data = self.cleaned_data['edited_text']
+        return data
