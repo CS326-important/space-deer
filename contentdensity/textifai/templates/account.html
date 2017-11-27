@@ -16,7 +16,7 @@
             {% if texts %}
             {% for text in texts %}
             <div class="card-body">
-                <h3> {{ text|truncatewords:20 }} </h3>
+                <a href="{% url 'featureoutput' pk=text.m_id %}"><h3> {{ text|truncatewords:20 }} </h3></a>
                 <em> {{ text.time_created }} </em>
             </div>
             {% endfor %}
@@ -35,7 +35,7 @@
             {% if comments %}
             {% for comment in comments %}
             <div class="card-body">
-                <h3> {{ comment }} </h3>
+                <a href="{% url 'featureoutput' pk=comment.text.m_id %}"><h3> {{ comment }} </h3></a>
                 - On {{ comment.user }}'s text, "{{ comment.text|truncatewords:20 }}"
                 <br>
                 <em> {{ comment.time_created }} </em>
