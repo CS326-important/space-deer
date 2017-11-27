@@ -12,22 +12,20 @@ class TextAnalyzer(object):
         self.text = text_input
 
     def get_insights(self):
-        insights = []
-        insights += self._get_text_tag()
-        insights += self._get_emotions()
-        insights += self._get_personality()
-        return insights
+        return self._get_text_tag() + \
+            self._get_emotions() + \
+            self._get_personality()
 
     def _get_text_tag(self):
         tags = indicoio.text_tags(self.text)
         key = _arg_max(tags)
-        return [(key, tags[key])]
+        return ((key, tags[key]),)
 
     def _get_emotions(self):
-        return list(indicoio.emotion(self.text).items())
+        return tuple(indicoio.emotion(self.text).items())
 
     def _get_personality(self):
-        return list(indicoio.personality(self.text).items())
+        return tuple(indicoio.personality(self.text).items())
 
     def get_sentiment(self):
         scores = SentimentIntensityAnalyzer().polarity_scores(self.text)
@@ -116,7 +114,7 @@ class TextAnalyzer(object):
     def get_total_characters(self):
         return len(self.text)
 
-    def get_total_words(self): 
+    def get_total_words(self):
         return len(self.text.split())
 
 
