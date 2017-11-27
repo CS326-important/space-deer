@@ -38,7 +38,41 @@
         {% csrf_token %}
         <button type="submit" name="new_submission_button" value=True class="btn btn-primary">New Submission
         </button>
+        <button type="button" name="edit_text_button" data-toggle="modal" data-target="#editTextModal" class="btn btn-primary">Edit
+        </button>
     </form>
+
+</div>
+<div class="container">
+    <div class="modal fade" id="editTextModal" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Submission</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" contenteditable="true">
+                    <p>{{ text }}</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="edit_text_form" method="POST" action="">
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button onclick="save_edited_text()" type="submit" name="edit_text_submission" value=True class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        function save_edited_text() {
+            document.getElementById("edit_text_form").submit();
+        }
+    </script>
 </div>
 {% endblock %} 
 {% block right_col %}
@@ -105,6 +139,6 @@
         {{ comment.content }}
     </div>
 </div>
-<br> 
-{% endfor %} 
+<br>
+{% endfor %}
 {% endblock %}
