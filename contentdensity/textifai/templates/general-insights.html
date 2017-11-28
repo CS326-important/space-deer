@@ -39,7 +39,7 @@
 {% endfor %}
 {% else %}
 <div class="row justify-content-center">
-	<span>Log in to see your contributions</span>
+	<span><a href="{% url 'login' %}" class="log">Log in</a> to see your contributions</span>
 </div>
 {% endif %}
 </div>
