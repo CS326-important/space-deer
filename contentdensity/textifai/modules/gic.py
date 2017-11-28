@@ -87,7 +87,7 @@ def _calc_most_common_word():
     try:
         return count.most_common(1)[0][0]
     except IndexError:
-        return ''
+        return 'N/a'
 
 add_general_insight('Most Common Word', _calc_most_common_word)
 
@@ -106,7 +106,7 @@ def _calc_most_long_winded_user():
     try:
         return count.most_common(1)[0][0].username
     except IndexError:
-        return ''
+        return 'N/a'
 
 add_general_insight('Most Long-winded User', _calc_most_long_winded_user)
 
@@ -119,7 +119,7 @@ def _calc_most_published_user():
     try:
         return count.most_common(1)[0][0].username
     except IndexError:
-        return ''
+        return 'N/a'
 
 add_general_insight('Most Published User', _calc_most_published_user)
 
