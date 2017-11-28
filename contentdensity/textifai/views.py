@@ -7,6 +7,7 @@ from .models import User, Text, Insight, Comment, GeneralInsight, \
     GrammaticalInsight
 from .modules import gic, textanalyzer
 from .forms import *
+import random
 
 
 # Create your views here.
@@ -154,19 +155,39 @@ def general_insights(request):
     """
     gic.calc_and_save_general_insights()
     insights = GeneralInsight.objects.order_by('?')
+    true_personal_insights = dict()
 
     if request.user.is_authenticated:
         personal_insights = Insight.objects.filter(user=request.user,
                     text__isnull=False)
 
-        for insight in personal_insights:
-            insight.probability = int(insight.probability * 100)
+        true_personal_insights = dict()
+
+        for tone in set([ insight.tone for insight in personal_insights ]):
+            try:
+                true_personal_insights[tone] = sum([ insight.probability
+                        for insight in personal_insights
+                        if insight.tone == tone ]) / len([ insight
+                        for insight in personal_insights
+                        if insight.tone == tone ])
+
+            except ZeroDivisionError:
+                continue
+
+            true_personal_insights[tone] = int(true_personal_insights[tone]
+                    * 100)
+
+        true_personal_insights = list(true_personal_insights.items())
+        random.shuffle(true_personal_insights)
     else:
-        personal_insights = []
+        true_personal_insights = []
 
     return render(
         request,
         'general-insights.html',
-        context={'insights': insights, 'personal_insights': personal_insights},
+        context={
+            'insights': insights,
+            'personal_insights': true_personal_insights[:4]
+        },
     )
 

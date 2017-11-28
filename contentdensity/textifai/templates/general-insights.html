@@ -29,8 +29,8 @@
 {% if request.user.is_authenticated %}
 {% for insight in personal_insights %}
 <div class="insightCard">
-	<span class="insightVal">{{ insight.probability }}%</span>
-	<span class="insightLabel">{{ insight.tone }}</span>
+	<span class="insightVal">{{ insight.1 }}%</span>
+	<span class="insightLabel">{{ insight.0 }}</span>
 </div>
 {% empty %}
 <div class="row justify-content-center">
