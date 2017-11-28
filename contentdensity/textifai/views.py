@@ -158,6 +158,9 @@ def general_insights(request):
     if request.user.is_authenticated:
         personal_insights = Insight.objects.filter(user=request.user,
                     text__isnull=False)
+
+        for insight in personal_insights:
+            insight.probability = int(insight.probability * 100)
     else:
         personal_insights = []
 
