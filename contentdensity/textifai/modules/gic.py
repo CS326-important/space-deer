@@ -1,15 +1,16 @@
 
 import string
 from collections import Counter
+from functools import partial
 from ..models import User, Text, Insight, Comment, GeneralInsight
 
 class general_insight_calculator:
     name = None
     calc = lambda *_: None
 
-    def __init__(self, name, calc):
+    def __init__(self, name, calc, *args):
         self.name = name
-        self.calc = calc
+        self.calc = partial(calc, *args)
 
     def do_calc(self):
         return self.calc()
@@ -23,9 +24,9 @@ class general_insight_calculator:
 # Dictionary of general insight name to general insight calculator
 general_insights = { }
 
-def add_general_insight(name, func):
+def add_general_insight(name, func, *args):
     global general_insights
-    general_insights[name] = general_insight_calculator(name, func)
+    general_insights[name] = general_insight_calculator(name, func, *args)
 
 def calc_and_save_general_insights():
     for insight in general_insights.values():
