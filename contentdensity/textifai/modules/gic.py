@@ -15,7 +15,8 @@ class general_insight_calculator:
         return self.calc()
 
     def calc_and_save(self):
-        entry, created = GeneralInsight.objects.get_or_create(pk=self.name, defaults={'value':''})
+        entry, created = GeneralInsight.objects.get_or_create(pk=self.name,
+                defaults={'value':''})
         entry.value = self.do_calc()
         entry.save()
 
@@ -38,9 +39,9 @@ def _calc_total_words():
     count = Counter()
 
     for text in Text.objects.all():
-        count.update(text.content.split())
+        count.update(list(filter(None, text.content.split())))
 
-    return len(count)
+    return sum(count.values())
 
 add_general_insight('Total Words', _calc_total_words)
 
@@ -49,7 +50,8 @@ def _calc_average_word_length():
     count = Counter()
 
     for text in Text.objects.all():
-        count.update([ w.translate(trans) for w in text.content.split() ])
+        count.update(list(filter(None,
+                [ w.translate(trans) for w in text.content.split() ])))
 
     try:
         return str(sum(map(len, count.keys()))
@@ -63,10 +65,10 @@ def _calc_average_entry_length():
     count = Counter()
 
     for text in Text.objects.all():
-        count.update(text.content.split())
+        count.update(list(filter(None, text.content.split())))
 
     try:
-        return str(len(count) // len(Text.objects.all())) + " words"
+        return str(sum(count.values()) // len(Text.objects.all())) + " words"
     except ZeroDivisionError:
         return 'N/a'
 
@@ -82,7 +84,8 @@ def _calc_most_common_word():
     count = Counter()
 
     for text in Text.objects.all():
-        count.update([ w.translate(trans) for w in text.content.split() ])
+        count.update(list(filter(None,
+                [ w.translate(trans) for w in text.content.split() ])))
 
     try:
         return count.most_common(1)[0][0]
@@ -92,10 +95,12 @@ def _calc_most_common_word():
 add_general_insight('Most Common Word', _calc_most_common_word)
 
 def _calc_most_long_winded_user():
+    trans = str.maketrans('', '', string.punctuation)
     count = Counter()
 
     for user in User.objects.all():
-        count[user] = sum([ len(text.content.split())
+        count[user] = sum([sum(len(w.translate(trans))
+                for w in text.content.split())
                 for text in Text.objects.filter(user=user)])
 
         try:
