@@ -21,8 +21,7 @@ def index(request):
 
 
 def _save_insights(insights, text, user):
-    list(map(lambda x: Insight(tone=x[0], probability=x[1], text=text, user=user).save(), insights))
-
+    [Insight(tone=x[0], probability=x[1], text=text, user=user).save() for x in insights]
 
 def _save_grammatical_insight(analysis, text, user):
     GrammaticalInsight(user=user
