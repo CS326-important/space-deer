@@ -76,8 +76,9 @@ class TextAnalyzer(object):
         return len(nltk.sent_tokenize(self.text))
 
     def _dale_chall_formula(self, difficult_words, sentences, words):
+        adjusted = 3.6365 if difficult_words / words > 0.05 else 0 
         return 0.1579 * ((difficult_words / words) * 100) \
-            + 0.0496 * (words / sentences)
+            + 0.0496 * (words / sentences) + adjusted 
 
     def _format_time_string(self, seconds):
         if seconds < 60:
