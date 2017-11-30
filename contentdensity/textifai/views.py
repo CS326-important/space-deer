@@ -193,8 +193,8 @@ def general_insights(request):
             except ZeroDivisionError:
                 continue
 
-            true_personal_insights[tone] = int(true_personal_insights[tone]
-                    * 100)
+            true_personal_insights[tone] = "{:.0%}".format(
+                    true_personal_insights[tone])
 
         true_personal_insights = list(true_personal_insights.items())
         random.shuffle(true_personal_insights)
