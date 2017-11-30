@@ -153,8 +153,8 @@ class GeneralInsight(models.Model):
     """
     Model representing a general insight
     """
-    name = models.CharField(primary_key=True, max_length=24)
-    value = models.CharField(max_length=24, blank=True)
+    name = models.CharField(primary_key=True, max_length=127)
+    value = models.CharField(max_length=127, blank=True)
 
     def get_absolute_url(self):
         """

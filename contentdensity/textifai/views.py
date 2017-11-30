@@ -166,6 +166,12 @@ def general_insights(request):
     """
     View function for the general insights page of the site.
     """
+    if not hasattr(general_insights, 'has_run'):
+        general_insights.has_run = 1
+        for tone in set([ insight.tone for insight in Insight.objects.all()]):
+            gic.add_general_insight('Average ' + tone,
+                    gic._calc_global_insight_probability, tone)
+
     gic.calc_and_save_general_insights()
     insights = GeneralInsight.objects.order_by('?')
     true_personal_insights = dict()

@@ -129,3 +129,12 @@ def _calc_most_published_user():
 
 add_general_insight('Most Published User', _calc_most_published_user)
 
+def _calc_global_insight_probability(tone):
+    insights = Insight.objects.filter(tone=tone)
+
+    try:
+        return "{:.2%}".format(sum([ insight.probability
+                for insight in insights ]) / len(Insight.objects.all()))
+    except ZeroDivisionError:
+        return 'N/a'
+
