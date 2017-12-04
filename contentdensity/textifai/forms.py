@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class TextAnalysisForm(forms.Form):
-    text_analysis_input = forms.CharField()
+    text_analysis_input = forms.CharField(widget=forms.Textarea)
+    text_title = forms.CharField(max_length=40, required=False)
 
     def clean_text_analysis_input(self):
         data = self.cleaned_data['text_analysis_input']

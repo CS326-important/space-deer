@@ -17,10 +17,18 @@
     </div>
 </div>
 <br> 
-
 <form method="POST" action="">
-    <div class="form-group">
-        <textarea class="form-control" style="resize: none; height:100%;" id="id_text_analysis_input" name="text_analysis_input" rows="20" placeholder="Enter text here..."></textarea>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_text_title">Enter Title</label>
+            <input type="text" id="id_text_title" name="text_title" class="form-control">
+            <label for="text_analysis_input">Enter text</label>
+            <textarea class="form-control" style="resize: none;"
+                        id="id_text_analysis_input"
+                        name="text_analysis_input" rows="15"></textarea>
+        </div>
+
+        </div>
     </div>
     {% csrf_token %}
     <div class="form-group">

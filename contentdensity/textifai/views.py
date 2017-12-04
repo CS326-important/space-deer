@@ -39,8 +39,8 @@ def _save_grammatical_insight(analysis, text, user):
                       ).save()
 
 
-def _save_text_analysis(user, analysis):
-    text = Text(content=analysis.text, user=user, mature_content=False)
+def _save_text_analysis(user, analysis, title):
+    text = Text(title=title, content=analysis.text, user=user, mature_content=False)
     text.save()
 
     _save_insights(analysis.get_insights(), text, user)
@@ -79,13 +79,14 @@ def textinput(request):
             if form.is_valid():
                 return _submit_text(form, request.user)
 
-    return render(request, 'textinput.html', context={},)
+    return render(request, 'textinput.html', context={})
 
     
 def _submit_text(form, user):
     text = form.cleaned_data['text_analysis_input']
+    title = form.cleaned_data['text_title']
     text_analysis = textanalyzer.TextAnalyzer(text)
-    m_id = _save_text_analysis(user, text_analysis)
+    m_id = _save_text_analysis(user, text_analysis, title)
     return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
 
