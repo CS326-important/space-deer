@@ -31,3 +31,16 @@ class EditedTextForm(forms.Form):
     def clean_edited_text(self):
         data = self.cleaned_data['edited_text']
         return data
+
+
+class FileUploadForm(forms.Form):
+    file = forms.FileField()
+    
+    def clean_text_analysis_input(self):
+        self.file.open(mode='rb') 
+        data = self.file.readlines()
+        self.file.close()
+        if not data:
+            raise ValidationError(
+                _('Invalid text - tried to upload empty file'))
+        return data

@@ -68,13 +68,19 @@ def textinput(request):
     View function for the text input page of the site.
     """
     if request.method == 'POST':
-        form = TextAnalysisForm(request.POST)
-        if form.is_valid():
-            return _submit_text(form, request.user)
+        if len(request.FILES) != 0:
+            form = FileUploadForm(request.POST)
+            file = request.FILES['file']
+            if form.is_valid():
+                return _submit_text_file(form, file, request.user)
+        else:
+            form = TextAnalysisForm(request.POST)
+            if form.is_valid():
+                return _submit_text(form, request.user)
 
     return render(request, 'textinput.html', context={},)
 
-
+    
 def _submit_text(form, user):
     text = form.cleaned_data['text_analysis_input']
     text_analysis = textanalyzer.TextAnalyzer(text)
@@ -94,7 +100,14 @@ def _submit_edited_text(form, text, user):
     _edit_text_analysis(text, user, text_analysis)
     return HttpResponseRedirect(reverse('featureoutput', args=(text.m_id,)))
 
+    
+def _submit_text_file(form, file, user):
+    file_text = form.cleaned_data['file_upload']
+    text_analysis = textanalyzer.TextAnalyzer(file_text)
+    m_id = _save_text_analysis(user, text_analysis)
+    return HttpResponseRedirect(reverse('featureoutput', args=(m_id,)))
 
+    
 def _post_featureoutput(request, text): 
     if request.POST.get("new_submission_button"):
         return redirect('textinput')
