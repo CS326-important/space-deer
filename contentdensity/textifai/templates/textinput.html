@@ -41,8 +41,11 @@
 <script> 
     function sendTextToForm() { 
         inputDiv = document.getElementById("id_text_analysis_input");
-        text = document.getElementById("trump").getAttribute('value'); 
-        inputDiv.value = text; 
+        var text = document.getElementById("trump").getAttribute('value'); 
+        inputDiv.value = text;
+        
+        titleDiv = document.getElementById("id_text_title");
+        titleDiv.value = "Donald Trump Tweet"
     }
 </script> 
 {% endblock %}
