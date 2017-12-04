@@ -35,6 +35,7 @@ def _save_grammatical_insight(analysis, text, user):
                        , total_chars=analysis.get_total_characters()
                        , most_common_word=analysis.get_most_common_word()
                        , average_word_length=analysis.get_average_word_length()
+                       , total_sentences= analysis.get_num_sentences()
                       ).save()
 
 

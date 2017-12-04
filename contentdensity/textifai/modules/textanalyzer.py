@@ -113,7 +113,7 @@ class TextAnalyzer(object):
         word_list = self.text.split()
         return self._dale_chall_formula(
             self._get_num_difficult_words(word_list),
-            self._get_num_sentences(),
+            self.get_num_sentences(),
             len(word_list))
 
     def _get_num_difficult_words(self, word_list):
@@ -126,7 +126,7 @@ class TextAnalyzer(object):
         with open('./textifai/modules/dale-chall-words.txt') as f:
             return f.readlines()
 
-    def _get_num_sentences(self):
+    def get_num_sentences(self):
         return len(nltk.sent_tokenize(self.text))
 
     def _dale_chall_formula(self, difficult_words, sentences, words):
