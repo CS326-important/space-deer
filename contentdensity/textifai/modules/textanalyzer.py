@@ -10,7 +10,55 @@ indicoio.config.api_key = '662e01cb3f997caf914df39a89bf0075'
 class TextAnalyzer(object):
     def __init__(self, text_input):
         self.text = text_input
-        self.readable_sentiment = {'neu': 'neutral', 'pos': 'high', 'neg': 'low'}
+        self.readable_sentiment = {
+            'neu': 'neutral', 'pos': 'high', 'neg': 'low'}
+        self.readable_pos = {
+            '$': 'dollar',
+            '\'\'': 'closing quotation mark',
+            '(': 'opening parenthesis',
+            ')': 'closing parenthesis',
+            ',': 'comma',
+            '--': 'dash',
+            '.': 'sentence terminator',
+            ':': 'colon or ellipsis',
+            'CC': 'conjunction',
+            'CD': 'numeral',
+            'DT': 'determiner',
+            'EX': 'existential there',
+            'FW': 'foreign word',
+            'IN': 'preposition',
+            'JJ': 'adjective',
+            'JJR': 'adjective',
+            'JJS': 'adjective',
+            'LS': 'list item marker',
+            'MD': 'modal auxiliary',
+            'NN': 'noun',
+            'NNP': 'noun',
+            'NNPS': 'noun',
+            'NNS': 'noun',
+            'PDT': 'pre-determiner',
+            'POS': 'genitive marker',
+            'PRP': 'pronoun',
+            'PRP$': 'pronoun',
+            'RB': 'adverb',
+            'RBR': 'adverb',
+            'RBS': 'adverb',
+            'RP': 'particle',
+            'SYM': 'symbol',
+            'TO': 'to',
+            'UH': 'interjection',
+            'VB': 'Verb',
+            'VBD': 'Verb',
+            'VBG': 'Verb',
+            'VBN': 'Verb',
+            'VBP': 'Verb',
+            'VBZ': 'Verb',
+            'WDT': 'determiner',
+            'WP': 'pronoun',
+            'WP$': 'pronoun',
+            'WRB': 'adverb',
+            '``': 'opening quotation mark',
+        }
 
     def get_insights(self):
         return self._get_text_tag() + \
@@ -35,7 +83,8 @@ class TextAnalyzer(object):
 
     def get_most_common_pos(self):
         pos_list = [t[1] for t in nltk.pos_tag(nltk.word_tokenize(self.text))]
-        return Counter(pos_list).most_common(1)[0][0]
+        mc_pos = Counter(pos_list).most_common(1)[0][0]
+        return self.readable_pos[mc_pos] if mc_pos in self.readable_pos else 'other'
 
     def get_reading_level(self):
         """
@@ -78,9 +127,9 @@ class TextAnalyzer(object):
         return len(nltk.sent_tokenize(self.text))
 
     def _dale_chall_formula(self, difficult_words, sentences, words):
-        adjusted = 3.6365 if difficult_words / words > 0.05 else 0 
+        adjusted = 3.6365 if difficult_words / words > 0.05 else 0
         return 0.1579 * ((difficult_words / words) * 100) \
-            + 0.0496 * (words / sentences) + adjusted 
+            + 0.0496 * (words / sentences) + adjusted
 
     def _format_time_string(self, seconds):
         if seconds < 60:
