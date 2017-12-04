@@ -1,35 +1,23 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
+{% block title %}
+<title>Textifai - Text Analysis Input</title>
+{% endblock %} 
 {% block page_head %}
-    <h1>Text Input</h1>
-{% endblock %}
-
+<h1>Text Analysis Input</h1>
+{% endblock %} 
 {% block content %}
-    <div class="row justify-content-center" style="width:100%;">
-        <div class="container">
-            <form method="POST" action="">
-                <div class="form-group">
-                    <label for="text_analysis_input">Enter text</label>
-                    <textarea class="form-control" style="resize: none;"
-                              id="id_text_analysis_input"
-                              name="text_analysis_input" rows="15"></textarea>
-                </div>
-                <br>
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="uploadTextFile">Upload text</label>
-                    <input type="file" class="form-control-file"
-                           id="uploadTextFile"
-                           aria-describedby="fileHelp">
-                    <small id="fileHelp" class="form-text text-muted">Accepted
-                        formats: [formats to be determined]
-                    </small>
-                    <button type="submit"
-                            class="btn btn-primary">Analyze
-                    </button>
-                </div>
-            </form>
-
-        </div>
+<form method="POST" action="">
+    <div class="form-group">
+        <textarea class="form-control" style="resize: none;" id="id_text_analysis_input" name="text_analysis_input" rows="15"></textarea>
     </div>
+    <br> {% csrf_token %}
+    <div class="form-group">
+        <label for="uploadTextFile">Upload text</label>
+        <input type="file" class="form-control-file" id="uploadTextFile" aria-describedby="fileHelp">
+        <small id="fileHelp" class="form-text text-muted">Accepted formats: [formats to be determined]
+        </small>
+        <button type="submit" class="btn btn-primary">Analyze
+        </button>
+    </div>
+</form>
 {% endblock %}
