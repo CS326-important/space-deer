@@ -99,8 +99,10 @@ class GrammaticalInsight(models.Model):
     speaking_time = models.CharField(max_length=100)
     total_words = models.IntegerField()
     total_chars = models.IntegerField()
+    total_sentences = models.IntegerField()
     most_common_word = models.CharField(max_length=100)
     average_word_length = models.IntegerField()
+
 
     def get_absolute_url(self):
         """

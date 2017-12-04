@@ -1,35 +1,44 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
+{% block title %}
+<title>Textifai - Text Analysis Input</title>
+{% endblock %} 
 {% block page_head %}
-    <h1>Text Input</h1>
-{% endblock %}
-
+<h1>Text Analysis Input</h1>
+{% endblock %} 
 {% block content %}
-    <div class="row justify-content-center" style="width:100%;">
-        <div class="container">
-            <form method="POST" action="">
-                <div class="form-group">
-                    <label for="text_analysis_input">Enter text</label>
-                    <textarea class="form-control" style="resize: none;"
-                              id="id_text_analysis_input"
-                              name="text_analysis_input" rows="15"></textarea>
-                </div>
-                <br>
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="uploadTextFile">Upload text</label>
-                    <input type="file" class="form-control-file"
-                           id="uploadTextFile"
-                           aria-describedby="fileHelp">
-                    <small id="fileHelp" class="form-text text-muted">Accepted
-                        formats: [formats to be determined]
-                    </small>
-                    <button type="submit"
-                            class="btn btn-primary">Analyze
-                    </button>
-                </div>
-            </form>
-
-        </div>
+<p>Not sure what to write? Try Textifai with one of the samples from the dropdown menu below. </p> 
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sample text
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" value="The media has been speculating that I fired Rex Tillerson or that he would be leaving soon - FAKE NEWS! He’s not leaving and while we disagree on certain subjects, (I call the final shots) we work well together and America is highly respected again!" 
+      id="trump" onclick="sendTextToForm()">Donald Trump</a>
     </div>
+</div>
+<br> 
+
+<form method="POST" action="">
+    <div class="form-group">
+        <textarea class="form-control" style="resize: none; height:100%;" id="id_text_analysis_input" name="text_analysis_input" rows="20" placeholder="Enter text here..."></textarea>
+    </div>
+    {% csrf_token %}
+    <div class="form-group">
+        {% comment %} 
+        <label for="uploadTextFile">Upload text</label>
+        <input type="file" class="form-control-file" id="uploadTextFile" aria-describedby="fileHelp">
+        <small id="fileHelp" class="form-text text-muted">Accepted formats: [formats to be determined]
+        </small> 
+        {% endcomment %}
+        <button type="submit" class="btn btn-primary">Analyze
+        </button>
+    </div>
+</form>
+<script> 
+    function sendTextToForm() { 
+        inputDiv = document.getElementById("id_text_analysis_input");
+        text = document.getElementById("trump").getAttribute('value'); 
+        inputDiv.value = text; 
+    }
+</script> 
 {% endblock %}
