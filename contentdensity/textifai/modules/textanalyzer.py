@@ -10,6 +10,7 @@ indicoio.config.api_key = '662e01cb3f997caf914df39a89bf0075'
 class TextAnalyzer(object):
     def __init__(self, text_input):
         self.text = text_input
+        self.readable_sentiment = {'neu': 'neutral', 'pos': 'high', 'neg': 'low'}
 
     def get_insights(self):
         return self._get_text_tag() + \
@@ -29,7 +30,8 @@ class TextAnalyzer(object):
 
     def get_sentiment(self):
         scores = SentimentIntensityAnalyzer().polarity_scores(self.text)
-        return _arg_max(scores)
+        scores.pop('compound')
+        return self.readable_sentiment[_arg_max(scores)]
 
     def get_most_common_pos(self):
         pos_list = [t[1] for t in nltk.pos_tag(nltk.word_tokenize(self.text))]
