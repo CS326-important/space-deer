@@ -37,7 +37,8 @@
 <script> 
     function sendTextToForm() { 
         inputDiv = document.getElementById("id_text_analysis_input");
-        inputDiv.innerHTML = document.getElementById("trump").getAttribute('value'); 
+        text = document.getElementById("trump").getAttribute('value'); 
+        inputDiv.value = text; 
     }
 </script> 
 {% endblock %}
