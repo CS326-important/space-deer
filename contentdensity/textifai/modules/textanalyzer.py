@@ -47,12 +47,12 @@ class TextAnalyzer(object):
             'SYM': 'symbol',
             'TO': 'to',
             'UH': 'interjection',
-            'VB': 'Verb',
-            'VBD': 'Verb',
-            'VBG': 'Verb',
-            'VBN': 'Verb',
-            'VBP': 'Verb',
-            'VBZ': 'Verb',
+            'VB': 'verb',
+            'VBD': 'verb',
+            'VBG': 'verb',
+            'VBN': 'verb',
+            'VBP': 'verb',
+            'VBZ': 'verb',
             'WDT': 'determiner',
             'WP': 'pronoun',
             'WP$': 'pronoun',
@@ -62,14 +62,13 @@ class TextAnalyzer(object):
 
     def get_insights(self):
         return (
-            self._get_text_tag(),
             self._get_emotion(),
             self._get_personality(),
             self._get_political(),
-        )
+        )  + self._get_text_tags(5)
 
-    def _get_text_tag(self):
-        return _get_max_tag(indicoio.text_tags(self.text))
+    def _get_text_tags(self, n):
+        return tuple(_get_max_n_tags(indicoio.text_tags(self.text), n))
 
     def _get_emotion(self):
         return _get_max_tag(indicoio.emotion(self.text))
@@ -177,6 +176,12 @@ class TextAnalyzer(object):
 def _get_max_tag(tags):
     key = _arg_max(tags)
     return (key, tags[key])
+
+def _get_max_n_tags(tags, n): 
+    for x in range(n):
+        key = _arg_max(tags)
+        yield (key, tags[key])
+        tags.pop(key)
 
 
 def _arg_max(dictionary):
