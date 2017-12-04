@@ -63,7 +63,8 @@ class TextAnalyzer(object):
     def get_insights(self):
         return self._get_text_tag() + \
             self._get_emotions() + \
-            self._get_personality()
+            self._get_personality() + \
+            self._get_political()
 
     def _get_text_tag(self):
         tags = indicoio.text_tags(self.text)
@@ -75,6 +76,9 @@ class TextAnalyzer(object):
 
     def _get_personality(self):
         return tuple(indicoio.personality(self.text).items())
+
+    def _get_political(self): 
+        return tuple(indicoio.political(self.text).items())
 
     def get_sentiment(self):
         scores = SentimentIntensityAnalyzer().polarity_scores(self.text)
