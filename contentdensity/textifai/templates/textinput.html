@@ -10,12 +10,14 @@
     <div class="form-group">
         <textarea class="form-control" style="resize: none;" id="id_text_analysis_input" name="text_analysis_input" rows="15"></textarea>
     </div>
-    <br> {% csrf_token %}
+    {% csrf_token %}
     <div class="form-group">
+        {% comment %} 
         <label for="uploadTextFile">Upload text</label>
         <input type="file" class="form-control-file" id="uploadTextFile" aria-describedby="fileHelp">
         <small id="fileHelp" class="form-text text-muted">Accepted formats: [formats to be determined]
-        </small>
+        </small> 
+        {% endcomment %}
         <button type="submit" class="btn btn-primary">Analyze
         </button>
     </div>
