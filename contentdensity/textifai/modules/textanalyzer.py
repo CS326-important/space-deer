@@ -61,24 +61,24 @@ class TextAnalyzer(object):
         }
 
     def get_insights(self):
-        return self._get_text_tag() + \
-            self._get_emotions() + \
-            self._get_personality() + \
-            self._get_political()
+        return (
+            self._get_text_tag(),
+            self._get_emotion(),
+            self._get_personality(),
+            self._get_political(),
+        )
 
     def _get_text_tag(self):
-        tags = indicoio.text_tags(self.text)
-        key = _arg_max(tags)
-        return ((key, tags[key]),)
+        return _get_max_tag(indicoio.text_tags(self.text))
 
-    def _get_emotions(self):
-        return tuple(indicoio.emotion(self.text).items())
+    def _get_emotion(self):
+        return _get_max_tag(indicoio.emotion(self.text))
 
     def _get_personality(self):
-        return tuple(indicoio.personality(self.text).items())
+        return _get_max_tag(indicoio.personality(self.text))
 
-    def _get_political(self): 
-        return tuple(indicoio.political(self.text).items())
+    def _get_political(self):
+        return _get_max_tag(indicoio.political(self.text))
 
     def get_sentiment(self):
         scores = SentimentIntensityAnalyzer().polarity_scores(self.text)
@@ -172,6 +172,11 @@ class TextAnalyzer(object):
 
     def get_total_words(self):
         return len(self.text.split())
+
+
+def _get_max_tag(tags):
+    key = _arg_max(tags)
+    return (key, tags[key])
 
 
 def _arg_max(dictionary):
