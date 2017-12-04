@@ -6,6 +6,7 @@
 <h1>Text Analysis Input</h1>
 {% endblock %} 
 {% block content %}
+<<<<<<< HEAD
 <p>Not sure what to write? Try Textifai with one of the samples from the dropdown menu below. </p> 
 <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,16 +18,12 @@
     </div>
 </div>
 <br> 
+
 <form method="POST" action="">
-    {% csrf_token %}
     <div class="form-group">
-        <label for="id_text_title">Enter Title</label>
-        <input type="text" id="id_text_title" name="text_title" class="form-control">
-        <label for="text_analysis_input">Enter text</label>
-        <textarea class="form-control" style="resize: none;"
-                    id="id_text_analysis_input"
-                    name="text_analysis_input" rows="15"></textarea>
+        <textarea class="form-control" style="resize: none; height:100%;" id="id_text_analysis_input" name="text_analysis_input" rows="20" placeholder="Enter text here..."></textarea>
     </div>
+    {% csrf_token %}
     <div class="form-group">
         {% comment %} 
         <label for="uploadTextFile">Upload text</label>
@@ -45,4 +42,30 @@
         inputDiv.value = text; 
     }
 </script> 
+=======
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_text_title">Enter Title</label>
+            <input type="text" id="id_text_title" name="text_title" class="form-control">
+            <label for="text_analysis_input">Enter text</label>
+            <textarea class="form-control" style="resize: none;"
+                        id="id_text_analysis_input"
+                        name="text_analysis_input" rows="15"></textarea>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="uploadTextFile">Upload text</label>
+            <input type="file" class="form-control-file"
+                    id="uploadTextFile"
+                    aria-describedby="fileHelp">
+            <small id="fileHelp" class="form-text text-muted">Accepted
+                formats: [formats to be determined]
+            </small>
+            <button type="submit"
+                    class="btn btn-primary">Analyze
+            </button>
+        </div>
+    </form>
+>>>>>>> Add title to tect input
 {% endblock %}
