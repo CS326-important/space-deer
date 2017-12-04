@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count, Avg
@@ -211,3 +212,21 @@ def general_insights(request):
         },
     )
 
+@login_required
+def allTexts(request):
+    """
+    View for all text entries for logged in user
+    """
+    text_list = Text.objects.filter(user=request.user)
+
+    paginator = Paginator(text_list, 10)
+    page = request.GET.get('page')
+
+    try:
+        texts = paginator.page(page)
+    except PageNotAnInteger:
+        texts = paginator.page(1)
+    except EmptyPage:
+        texts = paginator.page(paginator.num_pages)
+    
+    return render(request, 'text-list.html', context={'texts':texts})

@@ -24,7 +24,7 @@ class Text(models.Model):
         """
         Returns the url to access a particular Text instance.
         """
-        return reverse('text-detail', args=[str(self.m_id)])
+        return reverse('featureoutput', args=[str(self.m_id)])
 
     def __str__(self):
         """

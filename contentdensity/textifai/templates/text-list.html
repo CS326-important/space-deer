@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for text in texts %}
+<div class="insightCard recents">
+{% if text.title %}
+<h3>{{ text.title }} <span class="author">{{ text.time_created }}</span></h3>
+{% else %}
+<h3>{{ text.time_created }}</h3>
+{% endif %}
+<p>{{ text.content }}</p>
+<a href="{{ text.get_absolute_url }}">View Text</a>
+</div>
+{% endfor %}
+
+<div class="pagination">
+	<span class="step-links">
+		{% if texts.has_previous %}
+		<a href="?page={{ texts.previous_page_number }}">previous</a>
+		{% endif %}
+		<span class="current">{{ texts.number }} of {{ texts.paginator.num_pages }}</span>
+		{% if texts.has_next %}
+		<a href="?page={{ texts.next_page_number }}">next</a>
+		{% endif %}
+	</span>
+</div>
+{% endblock %}
