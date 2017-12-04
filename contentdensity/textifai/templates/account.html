@@ -8,16 +8,23 @@
     <p>Welcome to your user page, <em>{{ user }}! </em></p>
 
     <div class="account-cards">
-        <div class="card">
+        <div class="card text-card">
             <div class="card-header">
                 <h2> Recent Content </h2>
-                <em> What have you written recently? </em> 
+                <em> What have you written recently? </em>
+                <a href="{% url 'text-list' %}" class="see-all">See All</a>
             </div>
             {% if texts %}
             {% for text in texts %}
             <div class="card-body">
-                <a href="{% url 'featureoutput' pk=text.m_id %}"><h3> {{ text|truncatewords:20 }} </h3></a>
-                <em> {{ text.time_created }} </em>
+                {% if text.title %}
+                <a href="{% url 'featureoutput' pk=text.m_id %}">
+                    <h3>{{ text.title }} <span class="author">{{ text.time_created }}</span></h3>
+                </a>
+                {% else %}
+                <a href="{% url 'featureoutput' pk=text.m_id %}"><h3>{{ text.time_created }}</h3></a>
+                {% endif %}
+                <p>{{ text|truncatewords:40 }}</p>
             </div>
             {% endfor %}
             {% else %}

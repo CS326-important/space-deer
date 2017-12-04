@@ -112,14 +112,19 @@ body {
   margin: 75px 0;
 }
 
-.text-list-card {
-  background-color: #eee;
-  margin: 15px;
-  padding: 25px 10px;
+.text-card {
+  flex-basis: 100%;
 }
 
 .pagination {
   display: block;
   text-align: center;
   margin: 50px 0;
+}
+
+.see-all {
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: 20px;
 }
