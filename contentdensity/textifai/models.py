@@ -102,6 +102,7 @@ class GrammaticalInsight(models.Model):
     total_sentences = models.IntegerField()
     most_common_word = models.CharField(max_length=100)
     average_word_length = models.IntegerField()
+    word_reuse_percentage = models.FloatField(default=1)
 
 
     def get_absolute_url(self):

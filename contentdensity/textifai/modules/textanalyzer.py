@@ -2,6 +2,7 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from collections import Counter
 from functools import reduce
+from collections import defaultdict
 import indicoio
 
 indicoio.config.api_key = '662e01cb3f997caf914df39a89bf0075'
@@ -171,6 +172,15 @@ class TextAnalyzer(object):
 
     def get_total_words(self):
         return len(self.text.split())
+        
+    def get_word_reuse_percentage(self):
+        unique_words = defaultdict(int)
+        for word in self.text.split():
+            word = word.lower()
+            unique_words[word] += 1
+        usage = [val - 1 for val in unique_words.values()];
+        percentage = sum(usage)/len(self.text.split())
+        return round(percentage,3)
 
 
 def _get_max_tag(tags):

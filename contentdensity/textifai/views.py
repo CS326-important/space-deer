@@ -37,6 +37,7 @@ def _save_grammatical_insight(analysis, text, user):
                        , most_common_word=analysis.get_most_common_word()
                        , average_word_length=analysis.get_average_word_length()
                        , total_sentences= analysis.get_num_sentences()
+                       , word_reuse_percentage = analysis.get_word_reuse_percentage()
                       ).save()
 
 
