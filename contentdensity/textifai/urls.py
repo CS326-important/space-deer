@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^account', views.account, name='account'),
     url(r'^general-insights$', views.general_insights, name='general-insights'),
     url(r'^texts$', views.allTexts, name='text-list'),
-    url(r'^searchresults/(?P<query>[-\w ]+$)', views.searchresults, name='searchresults'),
+    url(r'^searchresults/(?P<query>.*$)', views.searchresults, name='searchresults'),
 ]

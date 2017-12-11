@@ -2,7 +2,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-
 class TextAnalysisForm(forms.Form):
     text_analysis_input = forms.CharField(widget=forms.Textarea)
     text_title = forms.CharField(max_length=40, required=False)
