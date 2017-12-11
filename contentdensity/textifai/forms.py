@@ -45,3 +45,10 @@ class FileUploadForm(forms.Form):
             raise ValidationError(
                 _('Invalid text - tried to upload empty file'))
         return data
+
+
+class SearchForm(forms.Form):
+    search_input = forms.CharField()
+    def clean_search_input(self):
+        data = self.cleaned_data['search_input'].lower()
+        return data

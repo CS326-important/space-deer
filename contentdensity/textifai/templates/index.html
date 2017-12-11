@@ -2,8 +2,9 @@
 
 {% block page_head %}
 <h1>Textifai</h1>
-<form class="search">
-	<input type="search" placeholder="Search"><input type="submit" value=" ">
+<form method="POST" action="" class="search">
+	{% csrf_token %}		
+	<input name="search_input" id="id_search_input" type="search" placeholder="Search"><input type="submit" value=" ">
 </form>
 {% endblock %}
 
