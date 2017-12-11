@@ -1,0 +1,1 @@
+web: gunicorn contentdensity.wsgi --log-file -
