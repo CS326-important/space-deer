@@ -20,8 +20,9 @@ def index(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data['search_input']
-            matches = _find_matches(data)
+            query = form.cleaned_data['search_input']
+            return HttpResponseRedirect(reverse('searchresults', args=(query,)))
+
     recent = Text.objects.all()[:4]
     return render(request, 'index.html', context={'recent': recent})
 
@@ -30,6 +31,10 @@ def _find_matches(query):
 
 def _text_contains_query(text, query):
     return query in text.content.lower() or query in text.title.lower()
+
+def searchresults(request, query): 
+    results = _find_matches(query)
+    return render(request, 'searchresults.html', context={'results': results})
 
 def _save_insights(insights, text, user):
     [Insight(tone=x[0], probability=x[1], text=text, user=user).save() for x in insights]
