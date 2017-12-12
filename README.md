@@ -6,12 +6,14 @@ http://textifai.herokuapp.com
 - NLTK
 - Pillow
 - Indicoio 
+- Whitenoise
 
 Install these dependencies using pip by typing the following commands in a terminal: 
 ```
 pip install nltk 
 pip install pillow
 pip install indicoio 
+pip install whitenoise
 ```
 
 ## NLTK Dependencies 
